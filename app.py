@@ -21,9 +21,12 @@ class Activity(db.Model):
     activity_id = db.Column(db.Integer, primary_key=True)
     activity_name = db.Column(db.String, nullable=False)
     description = db.Column(db.String, nullable=True, default="")
+    included_types = db.Column(db.String, nullable=False)
 
     def __repr__(self):
         return f"Activity {self.activity_id}: {self.activity_name} with description {self.description}"
+
+
 
 class Comment(db.Model):
     comment_id = db.Column(db.Integer, primary_key=True)
