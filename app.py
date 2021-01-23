@@ -19,10 +19,21 @@ app.secret_key = 'somethingsecret'
 app.config["SESSION_TYPE"] = 'filesystem'
 
 
-@app.route('/')
+@app.route('/', methods=['GET','POST'])
 def index():
     return render_template("index.html")
 
-
-
-
+"""
+input: checkList --> a list of the items checked
+output: a list of the associated Placetype Ids
+"""
+def getPlaces(checkList):
+    finalString = ""
+    listOfPlaces = []
+    for i in range(len(checkList)):
+        activityList = Activity.query.filter_by(activity_name = checkList[i])
+        finalString = finalString + activityList
+        for j in activityList.split(' '):
+            if(listOfPlaces.find(j)==-1): 
+                listOfPlaces.append(j)
+    return listOfPlaces
