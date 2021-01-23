@@ -34,7 +34,6 @@ def index():
         return render_template("index.html", activities=Activity.query.order_by(Activity.activity_name).all(), results=)
         
 
-
 """
 input: checkList --> a list of the items checked
 output: a list of the associated Placetype Ids
