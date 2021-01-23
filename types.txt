@@ -1,4 +1,3 @@
-"""
 accounting
 airport
 amusement_park
@@ -95,4 +94,3 @@ travel_agency
 university
 veterinary_care
 zoo
-"""
