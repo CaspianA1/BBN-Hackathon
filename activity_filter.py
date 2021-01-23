@@ -26,5 +26,23 @@ if __name__ == "__main__":
 ##############
 
 class Activity:
-	def __init__(self, type_: str, location: str, radius: int, indoor_or_outdoor: bool, cost: int):
-		pass
+	def __init__(self, type_: str, location: list, inside: bool, cost: int):
+		self.type = type_
+		self.location = location
+		self.inside = inside
+		self.cost = cost
+	def matches_type(self, t):
+		return self.type == t
+	def is_close(self, loc, max_dist):
+		dlat, dlong = abs(loc[0] - self.location[0]), abs(loc[1] - self.location[1])
+		return ((dlat + dlong) / 2) < max_dist
+	def inside(self):
+		return self.inside
+	def price_bracket(self):
+		if self.cost <= 25: return "cheap"
+		elif 50 >= self.cost > 25: return "medium"
+		else: return "expensive"
+
+a = Activity("", [], False, 51)
+
+print(a.price_bracket())
