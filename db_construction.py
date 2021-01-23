@@ -1,6 +1,5 @@
 import os
 from flask import Flask, render_template, request, redirect, session, flash
-from flask_session import session
 from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer

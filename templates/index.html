@@ -2,4 +2,51 @@
 
 {% block body %}
 <h1>What do you want to do today?</h1>
+<form action="/" method="post">
+    <div class="container">
+      <div class="row">
+        <button class="btn btn-light btn-block" id="filtersButton" onclick="checkFilters(); return false;">Filters</button>
+      </div>
+      <div style="padding:10px" id="divideFilters"></div>
+      <div class="row" id="filters" style="min-height: 100px;" hidden>
+        <div class="col-md-4">
+        {% for activity in activities %}
+        <div class="form-group">
+            <label for="typeFilter">{{activity.activity_name}}</label>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                <div class="input-group-text">
+                    <input type="checkbox" id='hello' name="typeCheck@{{activity.activity_id}}" aria-label="Checkbox for following text input">
+                </div>
+                </div>
+                <input type="text" class="form-control" id='bye' name="typeFilter" aria-label="Text input with checkbox" placeholder="Business Type">
+            </div>
+        </div>
+        {% endfor %}
+      </div>
+    
+      <div class="col-md-4">
+            <input type="submit" class="btn btn-secondary btn-block h-50" name="pageButton" value="Search With Applied Filters">
+      </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      function checkFilters(){
+        if (document.getElementById("filters").hidden){
+          document.getElementById("filters").hidden = false;
+          document.getElementById("divideFilters").className = "dropdown-divider";
+          document.getElementById("filtersButton").innerHTML = "No Filters";
+        }else{
+          document.getElementById("filters").hidden = true;
+          document.getElementById("divideFilters").className = "";
+          document.getElementById("filtersButton").innerHTML = "Filters";
+        }
+      }
+    </script>
+          </div>
+          </div>
+          </div>
+          <div style="padding: 30px"></div>
+                </form>
 {% endblock %}
