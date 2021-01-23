@@ -17,8 +17,27 @@ db = SQLAlchemy(app)
 app.secret_key = 'somethingsecret'
 app.config["SESSION_TYPE"] = 'filesystem'
 
+class Activity(db.Model):
+    activity_id = db.Column(db.Integer, primary_key=True)
+    activity_name = db.Column(db.String, nullable=False)
+    description = db.Column(db.String, nullable=True, default="")
+
+    def __repr__(self):
+        return f"Activity {self.activity_id}: {self.activity_name} with description {self.description}"
+
+class Comment(db.Model):
+    comment_id = db.Column(db.Integer, primary_key=True)
+    author_name = db.Column(db.String, nullable=True, default="Anonymous")
+    message = db.Column(db.String, nullable=False)
+
+    def __repr__(self):
+        return f"Comment {self.comment_id} Written by {self.author_name} with message {self.message}"
+
+
 @app.route('/')
 def index():
     return render_template("index.html")
+
+
 
 
