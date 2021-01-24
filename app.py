@@ -7,7 +7,7 @@ from tempfile import mkdtemp
 from werkzeug.security import check_password_hash, generate_password_hash
 from db_construction import Activity, Placetype, Comment, Action, Mood_and_Activity, Mood
 from helper import vector_cosine_similarity, getPlaces, filter_bad_businesses_and_get_top_5
-from activity_filter import nearby_locs_from_type
+from activity_filter import nearby_locs_from_type, lat_long_from_address
 import requests, json, datetime, nltk, ssl, spacy, en_core_web_md, math, multiprocessing as mp
 
 
@@ -29,6 +29,7 @@ with open('config.json') as json_data:
 	config_file = json.load(json_data)
 
 API_KEY = config_file['apikey']
+GEO_KEY = config_file['geocodekey']
 
 app.config["SESSION_FILE_DIR"] = mkdtemp()
 app.config['SESSION_PERMANENT'] = False
@@ -44,45 +45,46 @@ def index():
 	if request.method =='GET':# Activity.query.order_by(Activity.activity_name).all()
 		return render_template("index.html", activities=Activity.query.order_by(Activity.activity_name).all(), results=False)
 	else:
-		#checklist will be all the selected activites
-		checkList = []
-		if request.form.get('activityCheck') == 'on':
-			for activity_check in request.form.keys():
-				if 'typeCheck' in activity_check and request.form.get(activity_check) == 'on':
-					checkList.append(activity_check.split('@')[1].strip())
-		radius = 10000
-		if request.form.get('radiusCheck') == 'on':
-			try:
-				radius = int(request.form.get('radiusFilter')) * 1000
-			except:
-				pass
-		price_range = None
-		if request.form.get('priceCheck') == 'on':
-			price_range = int(request.form.get('priceRange')) -1
+		return render_template('apologies.html')
+		# #checklist will be all the selected activites
+		# checkList = []
+		# if request.form.get('activityCheck') == 'on':
+		# 	for activity_check in request.form.keys():
+		# 		if 'typeCheck' in activity_check and request.form.get(activity_check) == 'on':
+		# 			checkList.append(activity_check.split('@')[1].strip())
+		# radius = 10000
+		# if request.form.get('radiusCheck') == 'on':
+		# 	try:
+		# 		radius = int(request.form.get('radiusFilter')) * 1000
+		# 	except:
+		# 		pass
+		# price_range = None
+		# if request.form.get('priceCheck') == 'on':
+		# 	price_range = int(request.form.get('priceRange')) -1
 		
-		prefer_indoor = None
-		if not int(request.form.get('indoorFilter')) == 3:
-			prefer_indoor = (int(request.form.get('indoorFilter')) == 1)
+		# prefer_indoor = None
+		# if not int(request.form.get('indoorFilter')) == 3:
+		# 	prefer_indoor = (int(request.form.get('indoorFilter')) == 1)
 
-		placetypes = getPlaces(checkList)
+		# placetypes = getPlaces(checkList)
 
-		#TODO: GOOGLE API filter by placetypes, radius, price range, and indoor?
+		# #TODO: GOOGLE API filter by placetypes, radius, price range, and indoor?
 
-		d = {'radius':radius}
+		# d = {'radius':radius}
 
-		if len(checkList) > 0:
-			d['type'] = '|'.join(placetypes)
+		# if len(checkList) > 0:
+		# 	d['type'] = '|'.join(placetypes)
 		
-		if price_range is not None:
-			d['minprice'] = price_range
-			d['maxprice'] = price_range
+		# if price_range is not None:
+		# 	d['minprice'] = price_range
+		# 	d['maxprice'] = price_range
 		
-		if prefer_indoor is not None:
-			d['keyword'] = 'indoor' if prefer_indoor else 'outdoor'
+		# if prefer_indoor is not None:
+		# 	d['keyword'] = 'indoor' if prefer_indoor else 'outdoor'
 
-		location_data = json.loads(nearby_locs_from_type(d))
+		# location_data = json.loads(nearby_locs_from_type(d))
 		
-		return render_template("index.html", activities=Activity.query.order_by(Activity.activity_name).all())
+		# return render_template("index.html", activities=Activity.query.order_by(Activity.activity_name).all())
 
 @app.route('/api/v1/moodsearch', methods=['POST'])
 def moodsearch():
@@ -121,6 +123,13 @@ def filtersearch():
 	if request.method == 'POST':
 		data = request.get_json()
 		d = {'key':API_KEY}
+
+		if 'location' in data.keys():
+			lat_long_dict = lat_long_from_address(GEO_KEY, data['location'])
+			d['location'] = f"{lat_long_dict['lat']},{lat_long_dict['lng']}"
+		else:
+			d['location'] = os.popen('curl ipinfo.io/loc').read()
+
 		if 'activities' in data.keys():
 			d['type'] = getPlaces(data['activities'])
 
@@ -139,7 +148,6 @@ def filtersearch():
 				d['keyword'] = 'indoor'
 			elif preference==2:
 				d['keyword'] = 'outdoor'
-		print(d)
 		google_data = nearby_locs_from_type(d)
 		if len(google_data) > 0:
 			top_5_hits = filter_bad_businesses_and_get_top_5(list_of_bad_businesses,google_data)
