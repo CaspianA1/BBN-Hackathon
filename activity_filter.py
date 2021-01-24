@@ -82,9 +82,16 @@ def nearby_locs_from_type(d):
 				if key != 'type':
 					param_list.append(f"{key}={d[key]}")
 			params = '&'.join(param_list)
-
+			print(params)
 			g = json.loads(requests.get(base + params).text)
 			if g['status'] == 'OK':
 				results.extend(g['results'])
+		return results
+	else:
+		param_list = [f"location={os.popen('curl ipinfo.io/loc').read()}"]
+		for key in d.keys():
+			if key != 'type':
+				param_list.append(f"{key}={d[key]}")
+		params = '&'.join(param_list)
 
-	return results
+		return json.loads(requests.get(base + params).text)['results']
