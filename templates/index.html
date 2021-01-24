@@ -30,19 +30,23 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Possible Activities</h5>
+        <span style="position:absolute; left: 37%;" id="activity_counter">(0)</span>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         {% for activity in activities %}
         <div class='form-check'>
         <label class="form-check-label" id="typeLabel@{{activity.activity_id}}" for="typeCheck@{{activity.activity_id}}">{{activity.activity_name}}</label>
-        <input class='form-check-input' name='typeCheck@{{activity.activity_id}}' id='typeCheck@{{activity.activity_id}}' onchange="change_select(this);" type='checkbox'>
+        <input class='form-check-input activity_checker' name='typeCheck@{{activity.activity_id}}' id='typeCheck@{{activity.activity_id}}' onchange="change_select(this);" type='checkbox'>
       </div>
       {% endfor %}
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-      </div>
+      <div class="modal-footer" style='min-width:100%'>
+        <button type="button" class="btn btn-danger" onclick="clear_all_activities();">Clear</button>
+            <button type="button" class="btn btn-primary" onclick="select_all_activities();">Select All</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        
+    </div>
     </div>
   </div>
 </div>
@@ -111,6 +115,52 @@
       </div>
     </div>
     <script>
+
+      function select_all_activities(){
+        var list = [];
+        if (document.getElementById('curr_select').dataset.names.length != 0){
+          list = document.getElementById('curr_select').dataset.names.split(',');
+        }
+        Array.prototype.forEach.call(document.getElementsByClassName('activity_checker'), element => {
+          var name = document.getElementById(element.id.replace('typeCheck@', 'typeLabel@')).innerHTML;
+          element.checked = true;
+          if (!list.includes(name)){
+            list.push(name);
+          }
+        });
+        selection_display(list);
+
+      }
+
+      function clear_all_activities(){
+
+        Array.prototype.forEach.call(document.getElementsByClassName('activity_checker'), element => {
+          element.checked = false;
+        });
+        selection_display([]);
+      }
+
+      //Takes in list, changes activity counter in modal and "currently selected" label
+      function selection_display(list){
+        if (list.length > 0){
+          var str = `Currently Selected: ${list.join(', ')}`;
+          if (str.length > 40){
+            document.getElementById('curr_select').innerHTML = `Currently Selected: ${list.length} Activities`;
+          }else{
+            document.getElementById('curr_select').innerHTML = str;
+          }
+          
+        }else{
+          document.getElementById('curr_select').innerHTML = "None Selected";
+        }
+
+        document.getElementById('activity_counter').innerHTML = `(${list.length})`;
+        document.getElementById('curr_select').dataset.names = list.join(',');
+      }
+
+
+
+
       function checkFilters(){
         if (document.getElementById("filters").hidden){
           document.getElementById("filters").hidden = false;
@@ -142,11 +192,11 @@
             document.getElementById('curr_select').innerHTML = str;
           }
           
-          
         }else{
           document.getElementById('curr_select').innerHTML = "None Selected";
         }
-        
+
+        document.getElementById('activity_counter').innerHTML = `(${list.length})`;
         document.getElementById('curr_select').dataset.names = list.join(',');
       }
 
