@@ -244,8 +244,6 @@
       }
 
       function updateVisual(element){
-        console.log(element.value);
-        console.log("$".repeat(parseInt(element.value)));
         document.getElementById('priceVisual').innerHTML = "$".repeat(parseInt(element.value));
       }
 
@@ -257,11 +255,11 @@
                   'Content-Type': 'application/json'
                 },
                 method: "POST",
-                body: JSON.stringify({word: document.getElementById('moodSearchbar').value.trim().split(' ')[0]})
+                body: JSON.stringify({word: document.getElementById('moodSearchbar').value.trim()})
             })
             .then(res => res.json())
             .then(result => {
-              // console.log(result);
+              console.log(result);
               var tempInnerHtml = "";
               console.log("result.payload: " + result.payload);
               for(var i=0;i<result.payload.length;i++) {
@@ -327,7 +325,6 @@
         }else if (document.getElementById('indoorFilter3').checked){
           payload["prefer_indoor"] = 3;
         }
-        console.log(payload)
         
         fetch("/api/v1/filtersearch",
         {
@@ -340,7 +337,12 @@
         })
         .then(res => res.json())
         .then(result => {
-          console.log(result);
+          if (result.status == 'OK'){
+            Array.prototype.forEach.call(result['results'], r => {
+              console.log(r);
+            });
+          }
+          console.log(result.status);
         })
         .catch(function(res){ console.log(res) });
 
