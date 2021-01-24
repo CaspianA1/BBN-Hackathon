@@ -85,7 +85,7 @@ def single_type_google_api(payload):
 	return []
 
 def nearby_locs_from_type(d):
-	mp.set_start_method('spawn')
+	
 	base = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?"
 	results = []
 	if 'type' in d.keys():
@@ -110,7 +110,7 @@ def nearby_locs_from_type(d):
 		# 	g = json.loads(requests.get(base + params).text)
 		# 	if g['status'] == 'OK':
 		# 		results.extend(g['results'])
-		return sorted(results, key=lambda x:x['rating'], reverse=True)
+		return sorted(results, key=lambda x:x['rating'] if 'rating' in x.keys() else 3, reverse=True)
 	else:
 		param_list = [f"location={os.popen('curl ipinfo.io/loc').read()}", 'fields=photos,name,rating,business_status,price_level']
 		for key in d.keys():
