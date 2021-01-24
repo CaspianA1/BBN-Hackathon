@@ -10,11 +10,11 @@ from helper import vector_cosine_similarity, getPlaces
 import requests, json, datetime, nltk, ssl, spacy, en_core_web_md, math
 
 try:
-    _create_unverified_https_context = ssl._create_unverified_context
+	_create_unverified_https_context = ssl._create_unverified_context
 except AttributeError:
-    pass
+	pass
 else:
-    ssl._create_default_https_context = _create_unverified_https_context
+	ssl._create_default_https_context = _create_unverified_https_context
 
 
 nlp = en_core_web_md.load()
@@ -31,80 +31,73 @@ app.config["SESSION_TYPE"] = 'filesystem'
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    if request.method =='GET':# Activity.query.order_by(Activity.activity_name).all()
-        return render_template("index.html", activities=Activity.query.order_by(Activity.activity_name).all(), results=False)
-    else:
-        #checklist will be all the selected activites
-        checkList = []
-        if request.form.get('activityCheck') == 'on':
-            for activity_check in request.form.keys():
-                if 'typeCheck' in activity_check and request.form.get(activity_check) == 'on':
-                    checkList.append(activity_check.split('@')[1].strip())
-        radius = 10000
-        if request.form.get('radiusCheck') == 'on':
-            try:
-                radius = int(request.form.get('radiusFilter')) * 1000
-            except:
-                pass
-        price_range = None
-        if request.form.get('priceCheck') == 'on':
-            price_range = int(request.form.get('priceRange')) -1
-        
-        prefer_indoor = None
-        if not int(request.form.get('indoorFilter')) == 3:
-            prefer_indoor = (int(request.form.get('indoorFilter')) == 1)
+	if request.method =='GET':# Activity.query.order_by(Activity.activity_name).all()
+		return render_template("index.html", activities=Activity.query.order_by(Activity.activity_name).all(), results=False)
+	else:
+		#checklist will be all the selected activites
+		checkList = []
+		if request.form.get('activityCheck') == 'on':
+		    for activity_check in request.form.keys():
+		        if 'typeCheck' in activity_check and request.form.get(activity_check) == 'on':
+		            checkList.append(activity_check.split('@')[1].strip())
+		radius = 10000
+		if request.form.get('radiusCheck') == 'on':
+			try:
+				radius = int(request.form.get('radiusFilter')) * 1000
+			except:
+				pass
+		price_range = None
+		if request.form.get('priceCheck') == 'on':
+			price_range = int(request.form.get('priceRange')) -1
+		
+		prefer_indoor = None
+		if not int(request.form.get('indoorFilter')) == 3:
+			prefer_indoor = (int(request.form.get('indoorFilter')) == 1)
 
-        placetypes = getPlaces(checkList)
+		placetypes = getPlaces(checkList)
 
-        #TODO: GOOGLE API filter by placetypes, radius, price range, and indoor?
-
-
-
-        
-
-        return render_template("index.html", activities=Activity.query.order_by(Activity.activity_name).all())
+		#TODO: GOOGLE API filter by placetypes, radius, price range, and indoor?
+		
+		return render_template("index.html", activities=Activity.query.order_by(Activity.activity_name).all())
 
 @app.route('/api/v1/moodsearch', methods=['POST'])
 def moodsearch():
-    moods = ['happy', 'sad', 'tired', 'angry', 'excited']
-    if request.method == 'POST':
-        data = request.get_json()
-        vec = nlp(data['word'])
-        mood_doc = nlp(' '.join(moods))
-        similarities = []
-        for mood in mood_doc:
-            similarities.append((vector_cosine_similarity(vec.vector, mood.vector), mood.text))
-            
-        return jsonify({'payload': sorted(similarities, key=lambda x: x[0], reverse=True)[:5]})
-    else:
-        return render_template('apologies.html')
+	moods = ['happy', 'sad', 'tired', 'angry', 'excited']
+	if request.method == 'POST':
+		data = request.get_json()
+		vec = nlp(data['word'])
+		mood_doc = nlp(' '.join(moods))
+		similarities = []
+		for mood in mood_doc:
+			similarities.append((vector_cosine_similarity(vec.vector, mood.vector), mood.text))
+
+		return jsonify({'payload': sorted(similarities, key=lambda x: x[0], reverse=True)[:5]})
+	else:
+		return render_template('apologies.html')
 
 @app.route('/api/v1/activity_mood_search', methods=['POST'])
 def activity_mood_search():
-    if request.method=='POST':
-        data = request.get_json()
-        # print(data)
-        # print(data['word'])
-        splitData = data['word'].split("<br>")
-        # assuming data is a list
-        result = []
-        for i in range(len(splitData)):
-            mood_query = Mood.query.filter_by(mood_name = splitData[i].upper()).with_entities(Mood.mood_id).all()
-            # [[1, happy], [2, 'sad']]
-            activityIds = Mood_and_Activity.query.filter_by(mood_id = mood_query).with_entities(Activity.activity_id)
-            print(Activity.query.filter_by(activity_id = activityIds).with_entities(Activity.activity_id))
-            result = result + Activity.query.filter_by(activity_id = activityIds).with_entities(Activity.activity_id)
-        return jsonify({"result" : result})
-    else:
-        return render_template('apologies.html')
+	if request.method=='POST':
+		data = request.get_json()
+		# print(data)
+		# print(data['word'])
+		splitData = data['word'].split("<br>")
+		result = []
+		for i in range(len(splitData)):
+			mood_query = Mood.query.filter_by(mood_name = splitData[i].upper()).with_entities(Mood.mood_id).all()
+			activityIds = Mood_and_Activity.query.filter_by(mood_id = mood_query).with_entities(Activity.activity_id).all()
+			print(Activity.query.filter_by(activity_id = activityIds).with_entities(Activity.activity_id)).all()
+			activity_list = Activity.query.filter_by(activity_id = activityIds).with_entities(Activity.activity_id).all()
+			for j in range(len(activity_list)):
+				result = result + activity_list[j]
+
+		return jsonify({"result" : result})
+	else:
+		return render_template('apologies.html')
 
 # @app.route('/api/v1/filtersearch', methods=['POST'])
 # def filtersearch():
-    
-
-
-
 
 
 if __name__=='__main__':
-    app.run(debug=True)
+	app.run(debug=True)
