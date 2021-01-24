@@ -81,7 +81,3 @@ def nearby_locs_from_type(d):
 	params = '&'.join(param_list)
 
 	return requests.get(base + params).text
-
-if __name__ == "__main__":
-	response = nearby_locs_from_type("AIzaSyB2TMvSqQ9or3Q4YqgGdnRHcX6lgPhYiJU", 50, "dentist", "inside")
-	print(response)
