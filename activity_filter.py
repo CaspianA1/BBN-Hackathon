@@ -54,13 +54,10 @@ class Activity:
 def filter_by_criteria(activities, criteria):
 	if not activities:
 		return activities
-	print(f"Activities: {activities}")
 	rest = filter_by_criteria(activities[1:], criteria)
-	print(f"Criteria: {criteria}")
 	for criterion in criteria:
 		print(f"One criterion: {criterion}")
 		if not (activity := activities[0]).matches_criteria(criterion):
-			print("Not")
 			return rest
 	return [activity] + rest
 

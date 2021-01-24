@@ -1,0 +1,145 @@
+
+************ FOOD ************
+MOOD: INDULGE YOURSELF / QUICK BITE / YUM / DELICACY / FANCY / HUNGRY
+ACTION: EAT
+	bakery
+	cafe
+	meal_delivery
+	meal_takeaway
+	restaurant
+
+
+************ STORE / CHILL ************
+MOOD: CHILL / AIGHT COOL / LOCAL
+ACTION: BUYING
+	bicycle_store
+	book_store
+	hardware_store
+	home_goods_store
+	convenience_store
+	drugstore
+	store
+	liquor_store
+	supermarket
+	pharmacy
+
+
+************ STORE / SHOPPING ************
+MOOD: INDULGE YOURSELF / SHOPPING SPREE / SPENDY / INTENSE
+ACTION: SHOPPING
+	shoe_store
+	shopping_mall
+	clothing_store
+	department_store
+	electronics_store
+	furniture_store
+	jewelry_store
+	pet_store
+
+
+
+************ BEAUTY ************
+MOOD: INDULGE YOURSELF / PRETTY / RELAX / THERAPEUTIC?? / GIRL TIME (to be gendered) / TRANQUIL / BREATHE
+ACTION: SIT BACK AND RELAX
+	beauty_salon
+	hair_care
+	spa
+
+
+
+************ TRANSPORTATION ************
+MOOD: CHILL / NO PURPOSE / WHATEVER / NO DIRECTION / I DON'T CARE / RANDOM / NONCHALANT
+ACTION: HANG AROUND / SIT DOWN N TALK
+	bus_station
+	gas_station
+	light_rail_station
+	subway_station
+	taxi_stand
+	train_station
+	transit_station
+	parking
+
+
+
+************ AMUSEMENT ************
+MOOD: FUN / EXCITING / INTENSE / ENERGETIC / ACTIVE / WOOHOO
+ACTION: RUN AROUND / GO CRAZY
+	amusement_park
+	bowling_alley
+
+
+
+************ ENTERTAINMENT ************
+MOOD: ZONE OUT / CHILL / PASSIVE
+ACTION: WATCH / RELAX, SIT BACK, AND ENJOY THE SHOW
+	movie_rental
+	movie_theater
+
+
+
+************ SITES ************
+MOOD: OOOO AAAA / CHILL / WOW! / FASCINATING / EXPLORE / NEW
+ACTION: LOOK AT COOL STUFF
+	aquarium
+	art_gallery
+	zoo
+	museum
+	tourist_attraction
+
+
+************ PARTY ************
+MOOD: CAN'T THINK ABOUT LIFE RIGHT NOW / CRAZY / FORGET / GO ALL OUT / SOCIAL / GIRL'S NIGHT OUT / BOY'S NIGHT OUT / LET LOOSE / RISKY / DARING
+ACTION: DANCE / DRINK / GAMBLE
+	bar
+	casino
+	night_club
+
+
+
+************ OUTDOORS/ACTIVE ************
+MOOD: ACTIVE / NATURE / BREATHE / INTENSE / EXPLORE
+ACTION: HIKE / JOG / RUN / WALK / BIKE / WORKOUT / EXERCISE
+	campground
+	park
+	gym
+
+
+
+************ TOWN/GOVERNMENT LOCATIONS ************
+MOOD: RANDOM / I GOT NO WHERE ELSE TO GO / NONCHALANT
+ACTION: WALK AROUND / CHILL / DO NOTHING
+	city_hall
+	courthouse
+	fire_station
+	police
+	post_office
+	local_government_office
+
+
+
+************ SCHOOL/LEARNING ************
+MOOD: NERD / STUDIOUS / QUIET / STUDENT LIFE / KIDS
+ACTION: WALK AROUND / READ / DO WORK / CHILL / RELAX
+	school
+	secondary_school
+	primary_school
+	university
+	library
+
+
+
+
+************************************************************************************************************************************************************
+
+************ OTHER THINGS NOT IN GOOGLE KEYWORDS ************
+ICE SKATING
+PLAYS / PERFORMANCES
+ROCK CLIMBING
+SWIMMING
+ARCADE GAMES
+TRAMPOLINE PLACES (SKY ZONE)
+VIRTUAL REALITY PLACES
+
+
+
+

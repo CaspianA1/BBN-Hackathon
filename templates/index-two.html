@@ -1,15 +1,113 @@
 {%extends "layout.html"%}
 
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+.sidenav {
+  height: 100%;
+  width: 160px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+.sidenav a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+}
+
+.main {
+  margin-left: 160px;
+  padding: 0px 10px;
+}
+
+/*@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}*/
+</style>
+</head>
+
 {% block body %}
 
+<h1 style="padding: 20px">What do you want to do today?</h1>
+
 <form action="/" method="post">
-    <div class="container" style='padding:5%'>
-      <!-- <div class="row">
+<<<<<<< HEAD
+    <div class="container" style="padding-left: 0">
+      <div class=".sidenav">
+        <a style="text-align: left; font-size: 30px">Filters</a>
+        <br>
+        <br>
+<!--         SIDEBAR -->
+        <div class="sidenav-category">
+<!--           ACTIVITY -->
+          <a>Activity/Mood</a>
+          <br>
+            <input type="checkbox" id="activity1" name="activity1" value="___">
+              <label for="activity1">Activity 1</label><br>
+            <input type="checkbox" id="activity2" name="activity2" value="___">
+              <label for="activity2">Activity 2</label><br>
+          <br>
+<!--           LOCATION -->
+          <a>Location</a>
+          <br>
+            <input type="text" class="form-control" id='bye' name="typeFilter" aria-label="Text input with checkbox" maxlength="10" placeholder="City/Town Name" style="position:absolute;top:285px;left:65px;width:183px;width:180px\9;#width:180px;height:23px; height:21px\9;#height:18px;border:1px solid #556;"selectBoxOptions="Concord;Newton;Lexington;Sudbury;Boston;Cambridge;Acton;Carlisle"><br><br>
+<!--           RADIUS -->
+          <a>Radius</a>
+          <br>
+            <input type="checkbox" id="radius1" name="radius1" value="___">
+              <label for="radius1">5 Miles</label><br>
+            <input type="checkbox" id="radius2" name="radius2" value="___">
+              <label for="radius2">10 Miles</label><br><br>
+<!--           OUTDOORS INDOORS -->
+          <a>Outdoors or Indoors</a><br>
+            <input type="checkbox" id="outdoors" name="outdoors" value="Outdoors">
+              <label for="outdoors">Outdoors</label><br>
+            <input type="checkbox" id="indoors" name="indoors" value="Indoors">
+              <label for="indoors">Indoors</label><br>
+          <br>
+<!--           COST -->
+          <a>Cost</a>
+          <br>
+            <input type="checkbox" id="cost1" name="cost1" value="0-10">
+              <label for="cost1">$0 - $10</label><br>
+            <input type="checkbox" id="cost2" name="cost2" value="10-20">
+              <label for="indoors">$10 - $20</label><br><br>
+<!--         <div class="col-md-4">
+        {% for activity in activities %}
+          <div class="form-group">
+            <label for="typeFilter">{{activity.activity_name}}</label>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                <div class="input-group-text">
+                    <input type="checkbox" id='hello' name="typeCheck@{{activity.activity_id}}" aria-label="Checkbox for following text input">
+                </div>
+                </div>
+                <input type="text" class="form-control" id='bye' name="typeFilter" aria-label="Text input with checkbox" placeholder="Business Type">
+            </div>
+          </div>
+          {% endfor %}
+        </div> -->
+<!--       </div>
+      <div style="padding:10px" id="divideFilters"></div>
+      <div class="row" id="filters" style="min-height: 100px; font-family: verdana" hidden>
+=======
+    <div class="container">
+      <div class="row">
         <button type="button" class="btn btn-light btn-block" id="filtersButton" onclick="checkFilters(); return false;">Filters</button>
-      </div> -->
-      <h1>What do you want to do today?</h1>
-      <hr class="dropdown-divider">
-      <div class="row" id="filters" style="min-height: 50%;">
+      </div>
+      <div style="padding:10px" id="divideFilters"></div>
+      <div class="row" id="filters" style="min-height: 50%;" hidden>
+>>>>>>> b777070494e72777dfbc70ae34b78e8b65dcb0f2
         <div class="col-md-4">
         <div class="form-group">
             <label for="activityButton">Possible Activities</label>
@@ -20,9 +118,8 @@
                 </div>
                 </div>
                   <button type="button" class="btn btn-secondary btn-block" id="activityFilter" style="min-width: 100%;" data-bs-toggle="modal" data-bs-target="#exampleModal" disabled>
-                    Open Menu
+                    Choose
                   </button>
-                  <span class='input-group-text' data-names="" id='curr_select' style="max-width: 100%; display: block; width: 100%; word-wrap: break-word; word-break: break-all;" hidden>None Selected</span>
 
 <!-- Modal for Selecting Activities -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -30,23 +127,20 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Possible Activities</h5>
-        <span style="position:absolute; left: 37%;" id="activity_counter">(0)</span>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         {% for activity in activities %}
         <div class='form-check'>
-        <label class="form-check-label" id="typeLabel@{{activity.activity_id}}" for="typeCheck@{{activity.activity_id}}">{{activity.activity_name}}</label>
-        <input class='form-check-input activity_checker' name='typeCheck@{{activity.activity_id}}' id='typeCheck@{{activity.activity_id}}' onchange="change_select(this);" type='checkbox'>
+        <label class="form-check-label" for="typeCheck@{{activity}}">{{activity}}</label>
+        <input class='form-check-input' name='typeCheck@{{activity}}' type='checkbox'>
       </div>
       {% endfor %}
       </div>
-      <div class="modal-footer" style='min-width:100%'>
-        <button type="button" class="btn btn-danger" onclick="clear_all_activities();">Clear</button>
-            <button type="button" class="btn btn-primary" onclick="select_all_activities();">Select All</button>
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        
-    </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
     </div>
   </div>
 </div>
@@ -54,6 +148,13 @@
 
             </div>
         </div>
+<<<<<<< HEAD
+        {% endfor %}
+      </div> -->
+    
+      <div class="col-md-4">
+            <input type="submit" class="btn btn-secondary btn-block h-50" name="pageButton" value="Search With Applied Filters">
+=======
         <div class="form-group">
           <label for="radiusFilter">Radius Filter (by KM)</label>
           <div class="input-group mb-3">
@@ -78,6 +179,7 @@
           <input type="range" class="form-range" min="1" max="5" id="priceRange" name="priceRange" onchange="updateVisual(this);" oninput="updateVisual(this);" disabled>
               </div>
 
+>>>>>>> b777070494e72777dfbc70ae34b78e8b65dcb0f2
       </div>
       <div class="form-group">
         <label for="indoorCheck">Indoor vs Outdoor</label>
@@ -105,16 +207,9 @@
     </div>
 
       </div>
-      <div class="col-md-4">
-        <div class="form-group">
-          <label for="moodSearchbar">Mood Search</label>
-        <div class="input-group mb-3">
-          
-          <input type="text" class="form-control" id="moodSearchbar" placeholder="One Word to Describe How You're Feeling" aria-label="Recipient's username" aria-describedby="button-addon2">
-          <button class="btn btn-outline-secondary" type="button" onclick="mood_search_api();" id="moodButton">Button</button>
-        </div>
-      </div>
-      </div>
+      <!-- <div class="col-md-4">
+        
+      </div> -->
     
       <!-- <div class="col-md-4">
       </div> -->
@@ -122,52 +217,6 @@
       </div>
     </div>
     <script>
-
-      function select_all_activities(){
-        var list = [];
-        if (document.getElementById('curr_select').dataset.names.length != 0){
-          list = document.getElementById('curr_select').dataset.names.split(',');
-        }
-        Array.prototype.forEach.call(document.getElementsByClassName('activity_checker'), element => {
-          var name = document.getElementById(element.id.replace('typeCheck@', 'typeLabel@')).innerHTML;
-          element.checked = true;
-          if (!list.includes(name)){
-            list.push(name);
-          }
-        });
-        selection_display(list);
-
-      }
-
-      function clear_all_activities(){
-
-        Array.prototype.forEach.call(document.getElementsByClassName('activity_checker'), element => {
-          element.checked = false;
-        });
-        selection_display([]);
-      }
-
-      //Takes in list, changes activity counter in modal and "currently selected" label
-      function selection_display(list){
-        if (list.length > 0){
-          var str = `Currently Selected: ${list.join(', ')}`;
-          if (str.length > 40){
-            document.getElementById('curr_select').innerHTML = `Currently Selected: ${list.length} Activities`;
-          }else{
-            document.getElementById('curr_select').innerHTML = str;
-          }
-          
-        }else{
-          document.getElementById('curr_select').innerHTML = "None Selected";
-        }
-
-        document.getElementById('activity_counter').innerHTML = `(${list.length})`;
-        document.getElementById('curr_select').dataset.names = list.join(',');
-      }
-
-
-
-
       function checkFilters(){
         if (document.getElementById("filters").hidden){
           document.getElementById("filters").hidden = false;
@@ -178,33 +227,6 @@
           document.getElementById("divideFilters").className = "";
           document.getElementById("filtersButton").innerHTML = "Filters";
         }
-      }
-
-      function change_select(element){
-        var name = document.getElementById(element.id.replace('typeCheck@', 'typeLabel@')).innerHTML;
-        var list = [];
-        if (document.getElementById('curr_select').dataset.names.length != 0){
-          list = document.getElementById('curr_select').dataset.names.split(',');
-        }
-        if (list.includes(name)){
-          list.splice(list.indexOf(name),1);
-        }else{
-          list.push(name);
-        }
-        if (list.length > 0){
-          var str = `Currently Selected: ${list.join(', ')}`;
-          if (str.length > 40){
-            document.getElementById('curr_select').innerHTML = `Currently Selected: ${list.length} Activities`;
-          }else{
-            document.getElementById('curr_select').innerHTML = str;
-          }
-          
-        }else{
-          document.getElementById('curr_select').innerHTML = "None Selected";
-        }
-
-        document.getElementById('activity_counter').innerHTML = `(${list.length})`;
-        document.getElementById('curr_select').dataset.names = list.join(',');
       }
 
       function disableElements(element){
@@ -221,17 +243,8 @@
         }else{
           if (element.checked){
             document.getElementById(element.id.replace('Check', 'Filter')).disabled = false;
-            if (element.id.includes('activity')){
-              document.getElementById('curr_select').hidden = false;
-            }
           }else{
-            var filter_element = document.getElementById(element.id.replace('Check', 'Filter'))
-            filter_element.disabled = true;
-            if (element.id.includes('radius')){
-              filter_element.value = filter_element.placeholder;
-            }else if (element.id.includes('activity')){
-              document.getElementById('curr_select').hidden = true;
-            }
+            document.getElementById(element.id.replace('Check', 'Filter')).disabled = true;
           }
         }
 
@@ -242,25 +255,13 @@
         console.log("$".repeat(parseInt(element.value)));
         document.getElementById('priceVisual').innerHTML = "$".repeat(parseInt(element.value));
       }
-
-      function mood_search_api(){
-        fetch("/api/v1/moodsearch",
-            {
-                headers: {
-                  'Accept': 'application/json',
-                  'Content-Type': 'application/json'
-                },
-                method: "POST",
-                body: JSON.stringify({word: document.getElementById('moodSearchbar').value.trim().split(' ')[0]})
-            })
-            .then(res => res.json())
-            .then(result => {console.log(result)})
-            .catch(function(res){ console.log(res) });
-      }
     </script>
           </div>
           </div>
           </div>
           <div style="padding: 30px"></div>
                 </form>
+
+
+
 {% endblock %}
