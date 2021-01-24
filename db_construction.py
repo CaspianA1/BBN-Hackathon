@@ -62,7 +62,6 @@ change
 • Shameful
 • Skeptical
 • Sorrowful
-• Suicidal
 • Worried
 """
 activity_group = """************ FOOD ************
