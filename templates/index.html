@@ -262,7 +262,7 @@
               console.log(result);
               var tempInnerHtml = "";
               console.log("result.payload: " + result.payload);
-              for(var i=0;i<result.payload.length;i++) {
+              for(var i=0;i<5;i++) { //result.payload.length
                 console.log("result.payload[i]: " + result.payload[i]);
                 tempInnerHtml = tempInnerHtml + result.payload[i][1] + "<br>";
               }
