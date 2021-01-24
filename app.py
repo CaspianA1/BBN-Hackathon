@@ -34,11 +34,33 @@ def index():
     if request.method =='GET':# Activity.query.order_by(Activity.activity_name).all()
         return render_template("index.html", activities=Activity.query.order_by(Activity.activity_name).all(), results=False)
     else:
-        #checklist will be all the filtered activites
+        #checklist will be all the selected activites
         checkList = []
-        for activity_check in request.form.keys():
-            if 'typeCheck' in activity_check and request.form.get(activity_check) == 'on':
-                checkList.append(activity_check.split('@')[1].strip())
+        if request.form.get('activityCheck') == 'on':
+            for activity_check in request.form.keys():
+                if 'typeCheck' in activity_check and request.form.get(activity_check) == 'on':
+                    checkList.append(activity_check.split('@')[1].strip())
+        radius = 10000
+        if request.form.get('radiusCheck') == 'on':
+            try:
+                radius = int(request.form.get('radiusFilter')) * 1000
+            except:
+                pass
+        price_range = None
+        if request.form.get('priceCheck') == 'on':
+            price_range = int(request.form.get('priceRange')) -1
+        
+        prefer_indoor = None
+        if not int(request.form.get('indoorFilter')) == 3:
+            prefer_indoor = (int(request.form.get('indoorFilter')) == 1)
+
+        placetypes = getPlaces(checkList)
+
+        #TODO: GOOGLE API filter by placetypes, radius, price range, and indoor?
+
+
+
+        
 
         return render_template("index.html", activities=Activity.query.order_by(Activity.activity_name).all())
 
@@ -57,6 +79,10 @@ def moodsearch():
         return jsonify({'payload': sorted(similarities, key=lambda x: x[0], reverse=True)[:5]})
     else:
         return render_template('apologies.html')
+
+# @app.route('/api/v1/filtersearch', methods=['POST'])
+# def filtersearch():
+    
 
 
 
