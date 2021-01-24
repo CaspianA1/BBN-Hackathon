@@ -6,15 +6,20 @@
 /* @font-face {
 	font-family: 'Work Sans', Sans-Serif;
 	font-size: 45px;
+	
 	font-family: 'Open Sans', Sans-Serif;
 	font-size: 15px;
 } */
+
+body {
+	background-color: #A8D0E6;
+}
 
 h1 {
 	font-family: 'Varela Round', Sans-Serif;
 	font-size: 48px;
 	color: white;
-	background-color: #24305E;
+	/* background-color: #24305E; */
 	width: 500px;
 	height: 200px;
 
@@ -34,7 +39,7 @@ h1 {
 	font-family: 'Varela Round', Sans-Serif;
 	font-size: 30px;
 	color: white;
-	background-color: #F76C6C;
+	/* background-color: #F76C6C; */
 	height: 75px;
 }
 
@@ -43,7 +48,7 @@ h1 {
 	font-family: 'Open Sans', Sans-Serif;
 	font-size: 15px;
 	color: white;
-	background-color: #F8E9A1;
+	/* background-color: #F8E9A1; */
 	height: 50px;
 
 }
@@ -53,7 +58,7 @@ h1 {
 	font-family: 'Open Sans', Sans-Serif;
 	font-size: 15px;
 	color: white;
-	background-color: #F8E9A1;
+	/* background-color: #F8E9A1; */
 	height: 75px;
 }
 
@@ -70,7 +75,7 @@ h1 {
 	font-family: 'Open Sans', Sans-Serif;
 	font-size: 15px;
 	color: white;
-	background-color: #F8E9A1;
+	/* background-color: #F8E9A1; */
 	height: 75px;
 }
 
@@ -80,7 +85,7 @@ h5 {
 	font-family: 'Varela Round', Sans-Serif;
 	font-size: 25px;
 	color: white;
-	background-color: #24305E;
+	/* background-color: #24305E; */
 	width: 500px;
 	height: 200px;
 }
@@ -88,8 +93,8 @@ h5 {
 .output-moods {
 	font-family: 'Open Sans', Sans-Serif;
 	font-size: 15px;
-	color: #24305E;
-	background-color: #A8D0E6;
+	/* color: #24305E; */
+	/* background-color: #A8D0E6; */
 	height: 75px;
 }
 
