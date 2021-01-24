@@ -6,7 +6,7 @@ from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from tempfile import mkdtemp
 from werkzeug.security import check_password_hash, generate_password_hash
 from db_construction import Activity, Placetype, Comment, Action, Mood_and_Activity, Mood
-from helper import vector_cosine_similarity, getPlaces
+from helper import vector_cosine_similarity, getPlaces, filter_bad_businesses_and_get_top_5
 from activity_filter import nearby_locs_from_type
 import requests, json, datetime, nltk, ssl, spacy, en_core_web_md, math
 
@@ -17,6 +17,8 @@ except AttributeError:
 else:
 	ssl._create_default_https_context = _create_unverified_https_context
 
+with open('top_500_chains.txt') as top_500:
+	list_of_bad_businesses = [i.strip() for i in top_500.readlines()]
 
 nlp = en_core_web_md.load()
 
@@ -100,8 +102,6 @@ def moodsearch():
 def activity_mood_search():
 	if request.method=='POST':
 		data = request.get_json()
-		# print(data)
-		# print(data['word'])
 		splitData = data['word'].split("<br>")
 		result = []
 		for i in range(len(splitData)):
@@ -137,7 +137,12 @@ def filtersearch():
 			elif preference==2:
 				d['keyword'] = 'outdoor'
 		google_data = json.loads(nearby_locs_from_type(d))
-		return jsonify(google_data)
+		top_5_hits = filter_bad_businesses_and_get_top_5(list_of_bad_businesses,google_data['results'])
+		if google_data['status'] == 'OK':
+			return jsonify({'status':'OK', 'results':top_5_hits})
+		elif 'ZERO_RESULTS' in google_data['status']:
+			return jsonify({'status':'No Results', 'results':[]})
+		return render_template('apologies.html')
 	else:
 		return render_template('apologies.html')
 
