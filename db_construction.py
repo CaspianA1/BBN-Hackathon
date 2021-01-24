@@ -8,9 +8,65 @@ from werkzeug.security import check_password_hash, generate_password_hash
 import requests, json, datetime
 
 app = Flask(__name__)
-
+"""
+Afraid
+• Aggravated
+• Angry
+• Anxious
+• Ashamed
+• Assertive
+• Burdened
+• Brave
+• Calm
+• Cautious
+• Challenged
+• Cheerful
+• Cherished
+• Comforted
+• Contented
+• Creative
+• Curious
+• Depressed
+• Embarrassed
+• Energized
+• Envious
+• Excited
+• Furious
+• Guilty
+• Grumpy
+• Happy
+• Hopeful
+• Humiliated
+• Hurt
+• Indifferent
+• Insecure
+• Irritated
+• Lonely
+• Loved
+• Mad
+• Optimistic
+• Overwhelmed
+• Panicked
+• Peaceful
+• Positive
+• Pessimistic
+• Prepared
+• Proud
+• Ready for
+change
+• Regretful
+• Relieved
+• Renewed
+• Sad
+• Self-confident
+• Shameful
+• Skeptical
+• Sorrowful
+• Suicidal
+• Worried
+"""
 activity_group = """************ FOOD ************
-MOOD: INDULGE YOURSELF / QUICK BITE / YUM / DELICACY / FANCY / HUNGRY
+MOOD: RELIEVED / CHERISHED / RENEWED / FANCY / HUNGRY / INDULGENT / COMFORTED / CURIOUS
 ACTION: EAT
 	bakery
 	cafe
@@ -21,7 +77,7 @@ ACTION: EAT
 
 
 ************ STORE - CHILL ************
-MOOD: CHILL / AIGHT COOL / LOCAL
+MOOD: CHILL / HAPPY / PEACEFUL / CALM
 ACTION: BUYING
 	bicycle_store
 	book_store
@@ -37,7 +93,7 @@ ACTION: BUYING
 
 
 ************ STORE - SHOPPING ************
-MOOD: INDULGE YOURSELF / SHOPPING SPREE / SPENDY / INTENSE
+MOOD: RELIEVED / CHALLENGED / ASSERTIVE / INTENSE / INDULGENT / HOPEFUL / INDULGENT / OVERWHELMED / CREATIVE
 ACTION: SHOPPING
 	shoe_store
 	shopping_mall
@@ -51,7 +107,7 @@ ACTION: SHOPPING
 
 
 ********* BEAUTY ***********
-MOOD: INDULGE YOURSELF / PRETTY / RELAX / THERAPEUTIC?? / GIRL TIME (to be gendered) / TRANQUIL / BREATHE
+MOOD: INDULGENT / RELIEVED / RELAX / PEACEFUL / CALM / CHERISHED / COMFORTED / POSITIVE / CONFIDENT / CREATIVE / HAPPY
 ACTION: SIT BACK AND RELAX
 	beauty_salon
 	hair_care
@@ -60,7 +116,7 @@ ACTION: SIT BACK AND RELAX
 
 
 ************ TRANSPORTATION ************
-MOOD: CHILL / NO PURPOSE / WHATEVER / NO DIRECTION / I DON'T CARE / RANDOM / NONCHALANT
+MOOD: CHILL / RELAX / NONCHALANT / HOPEFUL
 ACTION: HANG AROUND / SIT DOWN N TALK
 	bus_station
 	gas_station
@@ -74,7 +130,7 @@ ACTION: HANG AROUND / SIT DOWN N TALK
 
 
 ************ AMUSEMENT ************
-MOOD: FUN / EXCITING / INTENSE / ENERGETIC / ACTIVE / WOOHOO
+MOOD: FUN / EXCITED / INTENSE / ENERGETIC / RELIEVED / HOPEFUL / CALM / COMFORTED / CURIOUS / CREATIVE / HAPPY
 ACTION: RUN AROUND / GO CRAZY
 	amusement_park
 	bowling_alley
@@ -82,7 +138,7 @@ ACTION: RUN AROUND / GO CRAZY
 
 
 ************ ENTERTAINMENT ************
-MOOD: ZONE OUT / CHILL / PASSIVE
+MOOD: FUN / CHILL / RELIEVED / COMFORTED / CALM / CURIOUS / CREATIVE / HAPPY
 ACTION: WATCH / RELAX, SIT BACK, AND ENJOY THE SHOW
 	movie_rental
 	movie_theater
@@ -90,7 +146,7 @@ ACTION: WATCH / RELAX, SIT BACK, AND ENJOY THE SHOW
 
 
 ************ SITES ************
-MOOD: OOOO AAAA / CHILL / WOW! / FASCINATING / EXPLORE / NEW
+MOOD: CHALLENGED / CHILL / EXCITED / HOPEFUL / EXPLORE / COMFORTED
 ACTION: LOOK AT COOL STUFF
 	aquarium
 	art_gallery
@@ -101,7 +157,7 @@ ACTION: LOOK AT COOL STUFF
 
 
 ************ PARTY ************
-MOOD: CAN'T THINK ABOUT LIFE RIGHT NOW / CRAZY / FORGET / GO ALL OUT / SOCIAL / GIRL'S NIGHT OUT / BOY'S NIGHT OUT / LET LOOSE / RISKY / DARING
+MOOD: FUN / CRAZY / EXCITED / EXPLORE / RELIEVED / CHALLENGED / CONFIDENT / CHERISHED / RENEWED / CURIOUS / CREATIVE / HAPPY
 ACTION: DANCE / DRINK / GAMBLE
 	bar
 	casino
@@ -110,7 +166,7 @@ ACTION: DANCE / DRINK / GAMBLE
 
 
 ************ OUTDOORS/ACTIVE ************
-MOOD: ACTIVE / NATURE / BREATHE / INTENSE / EXPLORE
+MOOD: FUN / NATURE / INTENSE / EXPLORE / RENEWED / CREATIVE
 ACTION: HIKE / JOG / RUN / WALK / BIKE / WORKOUT / EXERCISE
 	campground
 	park
@@ -119,7 +175,7 @@ ACTION: HIKE / JOG / RUN / WALK / BIKE / WORKOUT / EXERCISE
 
 
 ************ TOWN/GOVERNMENT LOCATIONS ************
-MOOD: RANDOM / I GOT NO WHERE ELSE TO GO / NONCHALANT
+MOOD: SERIOUS / CHILL / EXPLORE / CURIOUS
 ACTION: WALK AROUND / CHILL / DO NOTHING
 	city_hall
 	courthouse
@@ -131,7 +187,7 @@ ACTION: WALK AROUND / CHILL / DO NOTHING
 
 
 ************ SCHOOL/LEARNING ************
-MOOD: NERD / STUDIOUS / QUIET / STUDENT LIFE / KIDS
+MOOD: SERIOUS / CALM / CHALLENGED / RENEWED / CREATIVE / CURIOUS
 ACTION: WALK AROUND / READ / DO WORK / CHILL / RELAX
 	school
 	secondary_school

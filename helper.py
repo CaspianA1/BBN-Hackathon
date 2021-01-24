@@ -42,7 +42,12 @@ def filter_bad_businesses_and_get_top_5(bad_businesses, all_businesses):
     bad_set = set(bad_businesses)
     good_businesses = []
     for b in all_businesses:
-        if (b['name'] not in bad_set) and ('OPERATIONAL' == b['business_status']):
+        bad = False
+        for bad_name in bad_set:
+            if b['name'] in bad_name:
+                bad = True
+                break
+        if (not bad) and ('OPERATIONAL' == b['business_status']):
             good_businesses.append(b)
     
     return good_businesses[:5] if len(good_businesses) > 5 else good_businesses

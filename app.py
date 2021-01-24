@@ -97,8 +97,8 @@ def moodsearch():
 		similarities = []
 		for mood in mood_doc:
 			similarities.append((vector_cosine_similarity(vec.vector, mood.vector), mood.text))
-		print(jsonify({'payload': sorted(similarities, key=lambda x: x[0], reverse=True)[:5]}))
-		return jsonify({'payload': sorted(similarities, key=lambda x: x[0], reverse=True)[:5]})
+		print(jsonify({'payload': sorted(similarities, key=lambda x: x[0], reverse=True)[:3]}))
+		return jsonify({'payload': sorted(similarities, key=lambda x: x[0], reverse=True)[:3]})
 	else:
 		return render_template('apologies.html')
 
