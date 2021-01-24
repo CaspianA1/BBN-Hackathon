@@ -72,12 +72,13 @@ if __name__ == "__main__":
 	print(r[0].name)
 """
 
-def nearby_locs_from_type(api_key, radius, type_name, keyword):
+def nearby_locs_from_type(d):
 	base = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?"
+	param_list = [f"location={os.popen('curl ipinfo.io/loc').read()}"]
+	for key in d.keys():
+		param_list.append(f"{key}={d[key]}")
 
-	params = "location={}&radius={}&type={}&keyword={}&key={}".format(
-		os.popen("curl ipinfo.io/loc").read(),
-		radius, '|'.join(type_name), keyword, api_key)
+	params = '&'.join(param_list)
 
 	return requests.get(base + params).text
 
