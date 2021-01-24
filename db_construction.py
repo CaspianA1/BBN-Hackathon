@@ -274,6 +274,10 @@ class Action(db.Model):
     action_id = db.Column(db.Integer, primary_key=True)
     action_name = db.Column(db.String, nullable=False)
 
+class Mood(db.Model):
+	mood_id = db.Column(db.Integer, primary_key=True)
+	mood_name = db.Column(db.String, nullable=False)
+
 
 class Comment(db.Model):
     comment_id = db.Column(db.Integer, primary_key=True)

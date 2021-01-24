@@ -5,7 +5,8 @@ from flask_mail import Mail
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from tempfile import mkdtemp
 from werkzeug.security import check_password_hash, generate_password_hash
-from db_construction import Activity, Placetype, Comment
+from db_construction import Activity, Placetype, Comment, Action, Mood
+from helper import vector_cosine_similarity, getPlaces
 import requests, json, datetime, nltk, ssl, spacy, en_core_web_md, math
 
 try:
@@ -58,31 +59,8 @@ def moodsearch():
         return render_template('apologies.html')
 
 
-def vector_cosine_similarity(vec1,vec2):
-    #Assume vec1 and vec2 have the same size 
-    dot_product = 0
-    vec1_sum = 0
-    vec2_sum = 0
-    for i, v_1 in enumerate(vec1):
-        dot_product += v_1 * vec2[i]
-        vec1_sum += v_1**2
-        vec2_sum += vec2[i]**2
-
-    return dot_product/(math.sqrt(vec1_sum)*math.sqrt(vec2_sum))
 
 
-"""
-input: checkList --> a list of the items checked
-output: a list of the associated Placetype Ids
-"""
-def getPlaces(checkList):
-    finalString = ""
-    listOfPlaces = set()
-    for i in range(len(checkList)):
-        activityList = Activity.query.filter_by(activity_name = checkList[i]).first()
-        finalString = finalString + activityList
-        listOfPlaces.union(set(activityList.split(' ')))
-    return listOfPlaces
 
 if __name__=='__main__':
     app.run(debug=True)
