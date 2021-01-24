@@ -9,6 +9,13 @@
 	
 	font-family: 'Open Sans', Sans-Serif;
 	font-size: 15px;
+	
+
+	font-family: 'Abril Fatface', Cursive;
+	font-size: 48px;
+	font-family: 'Poppins', Sans-Serif;
+	font-size: 14px;
+	font-family: 'Source Sans Pro', sans-serif;
 } */
 
 body {
@@ -16,8 +23,8 @@ body {
 }
 
 h1 {
-	font-family:'Varela',Sans-Serif;
-	font-size: 48px;
+	font-family: 'Poppins', Sans-Serif;
+	font-size: 50px;
 	color: white;
 	background-color: #24305E;
 	width: 100%;
@@ -51,8 +58,8 @@ h2 {
 
 /*filter types*/
 .filter-type {
-	font-family: 'Varela Round', Sans-Serif;
-	font-size: 30px;
+	font-family: 'Poppins', Sans-Serif;
+	font-size: 20px;
 	color: white;
 	background-color: #F76C6C;
 	border-radius: 25px;
@@ -63,7 +70,7 @@ h2 {
 
 /*activity*/
 .btn .btn-secondary .btn-block {
-	font-family: 'Open Sans', Sans-Serif;
+	font-family: 'Source Sans Pro', sans-serif;
 	font-size: 15px;
 	color: white;
 	background-color: #f76c6c;
@@ -73,7 +80,7 @@ h2 {
 
 /*price bar*/
 .form-range {
-	font-family: 'Open Sans', Sans-Serif;
+	font-family: 'Source Sans Pro', sans-serif;
 	font-size: 15px;
 	color: white;
 	background-color: #f8e9a1;
@@ -88,7 +95,7 @@ h2 {
 
 /*radius and mood*/
 .form-control {
-	font-family: 'Open Sans', Sans-Serif;
+	font-family: 'Source Sans Pro', sans-serif;
 	font-size: 15px;
 }
 
@@ -101,7 +108,7 @@ h2 {
 
 /*outdoor-indoor and activity buttons*/
 .form-check {
-	font-family: 'Open Sans', Sans-Serif;
+	font-family: 'Source Sans Pro', sans-serif;
 	font-size: 15px;
 	color: grey;
 	background-color: #f8e9a1;
@@ -114,7 +121,7 @@ h2 {
 /*mood output*/
 
 h5 {
-	font-family: 'Varela Round', Sans-Serif;
+	font-family: 'Poppins', Sans-Serif;
 	font-size: 25px;
 	color: white;
 	background-color: #24305E;
@@ -125,7 +132,7 @@ h5 {
 }
 
 .output-moods {
-	font-family: 'Open Sans', Sans-Serif;
+	font-family: 'Source Sans Pro', sans-serif;
 	font-size: 15px;
 	color: #24305E;
 	background-color: #A8D0E6;
