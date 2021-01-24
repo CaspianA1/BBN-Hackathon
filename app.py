@@ -82,15 +82,16 @@ def index():
 
 @app.route('/api/v1/moodsearch', methods=['POST'])
 def moodsearch():
-	moods = ['happy', 'sad', 'tired', 'angry', 'excited']
+	moods = [m[0] for m in Mood.query.with_entities(Mood.mood_name).all()]
+	print(moods)
 	if request.method == 'POST':
 		data = request.get_json()
 		vec = nlp(data['word'])
-		mood_doc = nlp(' '.join(moods))
+		mood_doc = [nlp(mood) for mood in moods]
 		similarities = []
 		for mood in mood_doc:
 			similarities.append((vector_cosine_similarity(vec.vector, mood.vector), mood.text))
-
+		print(jsonify({'payload': sorted(similarities, key=lambda x: x[0], reverse=True)[:5]}))
 		return jsonify({'payload': sorted(similarities, key=lambda x: x[0], reverse=True)[:5]})
 	else:
 		return render_template('apologies.html')
@@ -121,7 +122,7 @@ def filtersearch():
 		data = request.get_json()
 		d = {'key':API_KEY}
 		if 'activities' in data.keys():
-			d['type'] = '|'.join(getPlaces(data['activites']))
+			d['type'] = '|'.join(getPlaces(data['activities']))
 
 		if 'radius' in data.keys():
 			d['radius'] = int(data['radius']) * 1000
@@ -129,7 +130,7 @@ def filtersearch():
 			d['radius'] = 10000
 
 		if 'price_range' in data.keys():
-			d['minprice'] = d['maxprice'] = int(data['price_range'])
+			d['minprice'] = d['maxprice'] = int(data['price_range'])-1
 		
 		if 'prefer_indoor' in data.keys():
 			preference = int(data['prefer_indoor'])

@@ -310,7 +310,6 @@ def main():
 
 	for section in activity_group.replace('*', '').strip().split('\n\n\n'):
 		section_name = section.strip().split('\n')[0].strip()
-		print(section_name)
 		new_activity = Activity(activity_name=section_name)
 		db.session.add(new_activity)
 		db.session.commit()
