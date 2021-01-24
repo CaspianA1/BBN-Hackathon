@@ -44,8 +44,7 @@ def getPlaces(checkList):
     for i in range(len(checkList)):
         activityList = Activity.query.filter_by(activity_name = checkList[i]).first()
         finalString = finalString + activityList
-        for j in activityList.split(' '):
-            listOfPlaces.add(j)
+        listOfPlaces.union(set(activityList.split(' ')))
     return listOfPlaces
 
 if __name__=='__main__':
