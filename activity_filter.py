@@ -74,7 +74,7 @@ if __name__ == "__main__":
 
 def single_type_google_api(payload):
 	base = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?"
-	param_list = [f"location={os.popen('curl ipinfo.io/loc').read()}", f"type={payload['type']}", 'fields=photos,name,rating,business_status,price_level']
+	param_list = [f"type={payload['type']}", 'fields=photos,name,rating,business_status,price_level']
 	for key in payload.keys():
 		if key != 'type':
 			param_list.append(f"{key}={payload[key]}")
@@ -85,7 +85,7 @@ def single_type_google_api(payload):
 	return []
 
 def nearby_locs_from_type(d):
-	mp.set_start_method('spawn')
+	
 	base = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?"
 	results = []
 	if 'type' in d.keys():
@@ -110,12 +110,25 @@ def nearby_locs_from_type(d):
 		# 	g = json.loads(requests.get(base + params).text)
 		# 	if g['status'] == 'OK':
 		# 		results.extend(g['results'])
-		return sorted(results, key=lambda x:x['rating'], reverse=True)
+		return sorted(results, key=lambda x:x['rating'] if 'rating' in x.keys() else 3, reverse=True)
 	else:
-		param_list = [f"location={os.popen('curl ipinfo.io/loc').read()}", 'fields=photos,name,rating,business_status,price_level']
+		param_list = ['fields=photos,name,rating,business_status,price_level']
 		for key in d.keys():
 			if key != 'type':
 				param_list.append(f"{key}={d[key]}")
 		params = '&'.join(param_list)
 
 		return sorted(json.loads(requests.get(base + params).text)['results'], key=lambda x:x['rating'], reverse=True)
+
+	import requests, json
+
+def lat_long_from_address(key, address):
+	base = "https://maps.googleapis.com/maps/api/geocode/json?"
+	params = f"address={address.replace(' ', '+')}&key={key}"
+	response = requests.get(base + params).text
+	return json.loads(response)["results"][0]["geometry"]["bounds"]["northeast"]
+
+if __name__ == "__main__":
+	geocode_key = "AIzaSyC6J9AVhQ6oJ7wL9khOUZMSQUgDptc_vGY"
+	response = lat_long_from_address(geocode_key, "23 Columbia Street, Watertown MA")
+	print(response)
