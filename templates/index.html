@@ -1,14 +1,14 @@
 {%extends "layout.html"%}
 {% block body %}
 <link href="https://fonts.googleapis.com/css?family=Abril+Fatface|Poppins:300" rel="stylesheet">
-<link href="{{ url_for('static', filename='styles/styles.css')}}" rel="stylesheet" type="text/css">
+<!-- <link href="{{ url_for('static', filename='styles/styles.css')}}" rel="stylesheet" type="text/css"> -->
 
 <form action="/" method="post">
     <div class="container" style='padding:5%'>
       <!-- <div class="row">
         <button type="button" class="btn btn-light btn-block" id="filtersButton" onclick="checkFilters(); return false;">Filters</button>
       </div> -->
-      <h1>Explorantine</h1>
+      <h1 style="font-size: 100px; font-family: Georgia, 'Times New Roman', Times, serif;">Explorantine</h1>
       <hr class="dropdown-divider">
       <div class="row" id="filters" style="min-height: 50%;">
         <div class="col-md-4">
@@ -22,10 +22,10 @@
                     <input type="checkbox" name="activityCheck" id="activityCheck" onclick="disableElements(this);"  aria-label="Checkbox for following text input">
                 </div>
                 </div>
-                  <button type="button" class="btn btn-secondary btn-block" id="activityFilter" style="min-width: 100%; background-color: #f8e9a1; border: 0px; color: grey; margin-bottom: 10px; border-radius: 10px;" data-bs-toggle="modal" data-bs-target="#exampleModal" disabled>
+                  <button type="button" class="btn btn-primary btn-block" id="activityFilter" style="min-width: 100%; " data-bs-toggle="modal" data-bs-target="#exampleModal" disabled>
                     Open Menu
                   </button>
-                  <span class='input-group-text' data-names="" id='curr_select' style="max-width: 100%; display: block; width: 100%; word-wrap: break-word; word-break: break-all; background-color: #f8e9a1; border: 0px; color: grey;margin-bottom: 10px; border-radius: 10px" hidden>None Selected</span>
+                  <span class='input-group-text' data-names="" id='curr_select' style="max-width: 100%" hidden>None Selected</span>
 
 <!-- Modal for Selecting Activities -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -128,14 +128,13 @@
           <label class="filter-type" for="moodSearchbar">Mood Search</label>
           <div class="input-group mb-3">
           
-            <input type="text" class="form-control" id="moodSearchbar" placeholder="One Word to Describe How You're Feeling" aria-label="Recipient's username" aria-describedby="button-addon2">
+            <!-- <input type="text" class="form-control" id="moodSearchbar" placeholder="One Word to Describe How You're Feeling" aria-label="Recipient's username" aria-describedby="button-addon2"> -->
             <input type="text" class="form-control" id="moodSearchbar" placeholder="How are you feeling? (One word.)" aria-label="Recipient's username" aria-describedby="button-addon2">
             <button class="btn btn-outline-secondary" type="button" onclick="mood_search_api();" id="moodButton">Search</button>
           </div>
           <div>
             <h5>Matching Moods:</h5>
             <div id="mood_search_result">
-
             </div>
           </div>
         </div>

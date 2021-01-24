@@ -39,6 +39,14 @@ h1 {
 
 .col-md-4 {
 	margin: 50px;
+	background-color:#24305E;
+	/* padding: 0px; */
+	border-radius: 25px;
+	padding-top: 10px;
+}
+
+h2 {
+	color: white;
 }
 
 /*filter types*/
