@@ -1,8 +1,7 @@
 {%extends "layout.html"%}
 {% block body %}
-<link href="https://fonts.googleapis.com/css?family=Neuton|Work+Sans" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Abril+Fatface|Poppins:300" rel="stylesheet">
 <link href="{{ url_for('static', filename='styles/styles.css')}}" rel="stylesheet" type="text/css">
-
 
 <form action="/" method="post">
     <div class="container" style='padding:5%'>
@@ -106,6 +105,9 @@
       <input type="button" class="btn btn-secondary" style="min-width: 100%; text-align: center;" onclick="filter_search_api();" name="pageButton" value="Search With Applied Filters">
     </div>
 
+    <div id="search_results">
+
+    </div>
 
       </div>
       <div class="col-md-4">
@@ -122,9 +124,6 @@
             <div id="mood_search_result">
 
             </div>
-          </div>
-          <div id="search_results">
-
           </div>
         </div>
       </div>
