@@ -1,7 +1,7 @@
 {%extends "layout.html"%}
-
 {% block body %}
-
+<link href="https://fonts.googleapis.com/css?family=Neuton|Work+Sans" rel="stylesheet">
+<link href="{{ url_for('static', filename='styles/styles.css')}}" rel="stylesheet" type="text/css">
 
 <form action="/" method="post">
     <div class="container" style='padding:5%'>
@@ -13,7 +13,7 @@
       <div class="row" id="filters" style="min-height: 50%;">
         <div class="col-md-4">
         <div class="form-group">
-            <label class="filter-type" for="activityButton">Possible Activities</label>
+            <label class="filter-type" for="activityButton">Activities</label>
             <div class="input-group mb-3" >
                 <div class="input-group-prepend">
                 <div class="input-group-text">
@@ -30,7 +30,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Possible Activities</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Activities</h5>
         <span style="position:absolute; left: 37%;" id="activity_counter">(0)</span>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
@@ -81,7 +81,7 @@
 
       </div>
       <div class="form-group">
-        <label class="filter-type" for="indoorCheck">Indoor vs Outdoor</label>
+        <label class="filter-type" for="indoorCheck">Indoor or Outdoor</label>
         <div class="form-check">
           <input class="form-check-input" type="radio" name="indoorFilter" id="indoorFilter1" value="1" checked>
           <label class="form-check-label" for="indoorFilter1">
@@ -116,10 +116,10 @@
           <div class="input-group mb-3">
           
             <input type="text" class="form-control" id="moodSearchbar" placeholder="One Word to Describe How You're Feeling" aria-label="Recipient's username" aria-describedby="button-addon2">
-            <button class="btn btn-outline-secondary" type="button" onclick="mood_search_api();" id="moodButton">Button</button>
+            <button class="btn btn-outline-secondary" type="button" onclick="mood_search_api();" id="moodButton">Search</button>
           </div>
           <div>
-            <h5>The moods that match your mood the most:</h5>
+            <h5>Matching Moods:</h5>
             <div id="mood_search_result">
 
             </div>
