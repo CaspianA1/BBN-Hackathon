@@ -1,6 +1,6 @@
 from difflib import SequenceMatcher as sm
 from functools import reduce
-import os, requests, json
+import os, requests, json, multiprocessing as mp
 
 ############ this is based on string comparisons
 def sort_by_similarity(similarities):
@@ -72,26 +72,50 @@ if __name__ == "__main__":
 	print(r[0].name)
 """
 
+def single_type_google_api(payload):
+	base = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?"
+	param_list = [f"location={os.popen('curl ipinfo.io/loc').read()}", f"type={payload['type']}", 'fields=photos,name,rating,business_status,price_level']
+	for key in payload.keys():
+		if key != 'type':
+			param_list.append(f"{key}={payload[key]}")
+	params = '&'.join(param_list)
+	g = json.loads(requests.get(base + params).text)
+	if g['status'] == 'OK':
+		return g['results']
+	return []
+
 def nearby_locs_from_type(d):
+	mp.set_start_method('spawn')
 	base = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?"
 	results = []
 	if 'type' in d.keys():
-		for place_type in d['type']:
-			param_list = [f"location={os.popen('curl ipinfo.io/loc').read()}", f"type={place_type}"]
-			for key in d.keys():
-				if key != 'type':
-					param_list.append(f"{key}={d[key]}")
-			params = '&'.join(param_list)
-			print(params)
-			g = json.loads(requests.get(base + params).text)
-			if g['status'] == 'OK':
-				results.extend(g['results'])
-		return results
+		placetype = d['type']
+		del d['type']
+		all_data = []
+		for place in placetype:
+			new_d = d.copy()
+			new_d['type'] = place
+			all_data.append(new_d)
+		
+		with mp.Pool(5) as p:
+			raw_results = p.map(single_type_google_api, all_data)
+		for r in raw_results:
+			results.extend(r)
+		# for place_type in d['type']:
+		# 	param_list = [f"location={os.popen('curl ipinfo.io/loc').read()}", f"type={place_type}", 'fields=photos,name,rating,business_status,price_level']
+		# 	for key in d.keys():
+		# 		if key != 'type':
+		# 			param_list.append(f"{key}={d[key]}")
+		# 	params = '&'.join(param_list)
+		# 	g = json.loads(requests.get(base + params).text)
+		# 	if g['status'] == 'OK':
+		# 		results.extend(g['results'])
+		return sorted(results, key=lambda x:x['rating'], reverse=True)
 	else:
-		param_list = [f"location={os.popen('curl ipinfo.io/loc').read()}"]
+		param_list = [f"location={os.popen('curl ipinfo.io/loc').read()}", 'fields=photos,name,rating,business_status,price_level']
 		for key in d.keys():
 			if key != 'type':
 				param_list.append(f"{key}={d[key]}")
 		params = '&'.join(param_list)
 
-		return json.loads(requests.get(base + params).text)['results']
+		return sorted(json.loads(requests.get(base + params).text)['results'], key=lambda x:x['rating'], reverse=True)
