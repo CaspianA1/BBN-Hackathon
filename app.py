@@ -33,6 +33,7 @@ app.config["SESSION_FILE_DIR"] = mkdtemp()
 app.config['SESSION_PERMANENT'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///hackathon2021.db'
 db = SQLAlchemy(app)
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = config_file['secretkey']
 app.config["SESSION_TYPE"] = 'filesystem'
 
