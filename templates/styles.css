@@ -1,0 +1,96 @@
+/*add head & link*/
+/*<link href="https://fonts.googleapis.com/css?family=Neuton|Work+Sans" rel="stylesheet">*/
+
+
+
+@font-face {
+	font-family: 'Work Sans', Sans-Serif;
+	font-size: 45px;
+	
+	font-family: 'Open Sans', Sans-Serif;
+	font-size: 15px;
+}
+
+h1 {
+	font-family: 'Varela Round', Sans-Serif;
+	font-size: 48px;
+	color: white;
+	background-color: #24305E;
+	width: 500px;
+	height: 200px;
+
+}
+
+/*<label class="filter-type" for="activityButton">Possible Activities</label>*/
+/*<label class="filter-type" for="radiusFilter">Radius Filter (by KM)</label>*/
+/*<label class="form-label filter-type" for="priceRange">Price Range</label>*/
+/*<label class="filter-type" for="indoorCheck">Indoor vs Outdoor</label>*/
+/*<label class="filter-type" for="moodSearchbar">Mood Search</label>*/
+.form-group {
+	width: 400px;
+}
+
+/*filter types*/
+.filter-type {
+	font-family: 'Varela Round', Sans-Serif;
+	font-size: 30px;
+	color: white;
+	background-color: #F76C6C;
+	height: 75px;
+}
+
+/*activity*/
+.btn .btn-secondary .btn-block {
+	font-family: 'Open Sans', Sans-Serif;
+	font-size: 15px;
+	color: white;
+	background-color: #F8E9A1;
+	height: 50px;
+
+}
+
+/*price bar*/
+.form-range {
+	font-family: 'Open Sans', Sans-Serif;
+	font-size: 15px;
+	color: white;
+	background-color: #F8E9A1;
+	height: 75px;
+}
+
+
+/*radius and mood*/
+.form-control {
+	font-family: 'Open Sans', Sans-Serif;
+	font-size: 15px;
+}
+
+
+/*outdoor-indoor and activity buttons*/
+.form-check-label {
+	font-family: 'Open Sans', Sans-Serif;
+	font-size: 15px;
+	color: white;
+	background-color: #F8E9A1;
+	height: 75px;
+}
+
+/*mood output*/
+
+h5 {
+	font-family: 'Varela Round', Sans-Serif;
+	font-size: 25px;
+	color: white;
+	background-color: #24305E;
+	width: 500px;
+	height: 200px;
+}
+
+.output-moods {
+	font-family: 'Open Sans', Sans-Serif;
+	font-size: 15px;
+	color: #24305E;
+	background-color: #A8D0E6;
+	height: 75px;
+}
+
