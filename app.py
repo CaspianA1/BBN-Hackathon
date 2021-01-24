@@ -137,9 +137,10 @@ def filtersearch():
 				d['keyword'] = 'indoor'
 			elif preference==2:
 				d['keyword'] = 'outdoor'
+		print(d)
 		google_data = nearby_locs_from_type(d)
-		top_5_hits = filter_bad_businesses_and_get_top_5(list_of_bad_businesses,google_data)
 		if len(google_data) > 0:
+			top_5_hits = filter_bad_businesses_and_get_top_5(list_of_bad_businesses,google_data)
 			return jsonify({'status':'OK', 'results':top_5_hits})
 		else:
 			return jsonify({'status':'No Results', 'results':[]})
