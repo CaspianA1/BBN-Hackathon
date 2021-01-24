@@ -37,39 +37,35 @@ class Activity:
 
 	def matches_criteria(self, *criteria):
 		for [crit_type, crit_val] in criteria:
-			if crit_type == "type" or crit_type == "indoors":
-				# crit val is another location type or an indoors status
+			if crit_type == "type":
 				return self.type == crit_val
+			elif crit_type == "inside":
+				return self.inside == crit_val
 			elif crit_type == "closeness":
 				# crit val is a pair of lat and long
 				dlat, dlong = abs(loc[0] - self.location[0]), abs(loc[1] - self.location[1])
 				return ((dlat + dlong) / 2) < 50
-			elif crit_type == "cheap":
+			elif crit_type == "cheap_cost": # hardcoded at the moment
 				return self.cost <= 50
-			elif crit_type == "medium_price":
+			elif crit_type == "medium_cost":
 				return 75 > self.cost > 50
-			elif crit_type == "expensive":
+			elif crit_type == "expensive_cost":
 				return self.cost >= 75
 
 def filter_by_criteria(activities, criteria):
 	if not activities:
 		return activities
-	rest = filter_by_criteria(activities[1:], criteria)
 	for criterion in criteria:
-		print(f"One criterion: {criterion}")
 		if not (activity := activities[0]).matches_criteria(criterion):
-			return rest
-	return [activity] + rest
+			return filter_by_criteria(activities[1:], criteria)
+	return [activity] + filter_by_criteria(activities[1:], criteria)
 
 if __name__ == "__main__":
-	activities = [
-	Activity("jogging", "recreation", [125.6, 350.0], False, 3),
-	Activity("hula hoop", "recreation", [345.2, 90.3], True, 10),
-	Activity("library", "academic", [200, 200], True, 4),
-	Activity("outdoor studying", "academic", [300, 300], False, 5)
-	]
-	r = filter_by_criteria(activities, [["type", "academic"], ["indoors", False], ["expensive", None]])
-	print(f"{r[0].name}, {r[1].name}")
+	activities = [Activity("jogging", "recreation", [125.6, 350.0], False, 3),
+		Activity("hula hoop", "recreation", [345.2, 90.3], True, 10),
+		Activity("library", "academic", [200, 200], True, 60),
+		Activity("outdoor studying", "academic", [300, 300], False, 5)]
+	r = filter_by_criteria(activities, [["inside", True], ["medium_cost", None]])
+	print(r[0].name)
 
 # next: take in place types, using google apis, return locations
-
