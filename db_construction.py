@@ -19,6 +19,7 @@ ACTION: EAT
 	restaurant
 
 
+
 ************ STORE - CHILL ************
 MOOD: CHILL / AIGHT COOL / LOCAL
 ACTION: BUYING
@@ -32,6 +33,7 @@ ACTION: BUYING
 	liquor_store
 	supermarket
 	pharmacy
+
 
 
 ************ STORE - SHOPPING ************
@@ -48,7 +50,7 @@ ACTION: SHOPPING
 
 
 
-************ BEAUTY ************
+********* BEAUTY ***********
 MOOD: INDULGE YOURSELF / PRETTY / RELAX / THERAPEUTIC?? / GIRL TIME (to be gendered) / TRANQUIL / BREATHE
 ACTION: SIT BACK AND RELAX
 	beauty_salon
@@ -95,6 +97,7 @@ ACTION: LOOK AT COOL STUFF
 	zoo
 	museum
 	tourist_attraction
+
 
 
 ************ PARTY ************
@@ -305,20 +308,20 @@ def main():
 
 	placetypes_to_activities = []
 
-	for section in activity_group.strip().split('\n\n\n'):
-		section_name = section.strip().split('\n')[0].strip('*').strip()
+	for section in activity_group.replace('*', '').strip().split('\n\n\n'):
+		section_name = section.strip().split('\n')[0].strip()
 		print(section_name)
 		new_activity = Activity(activity_name=section_name)
 		db.session.add(new_activity)
 		db.session.commit()
 		new_actions = []
 		new_moods = []
-		for string in section.split('ACTION: ')[1].strip().split('\n')[0].strip().split('/'):
+		for string in section.strip().split('\n')[2].lstrip('ACTION: ').strip().split('/'):
 			new_actions.append(string.strip())
 			actions_to_activities.append([string.strip(), new_activity.activity_id])
 		
 
-		for string in section.split('\n')[1].strip('MOOD: ').strip().split('/'):
+		for string in section.strip().split('\n')[1].strip('MOOD: ').strip().split('/'):
 			new_moods.append(string.strip())
 			moods_to_activites.append([string.strip(), new_activity.activity_id])
 
@@ -330,6 +333,37 @@ def main():
 		placetype_list = [Placetype.query.filter_by(type_name=string.strip()).first().type_id for string in section.split('ACTION')[1].strip().split('\n')[1:] if len(string.strip()) > 0]
 		
 		placetypes_to_activities.extend([[pk, new_activity.activity_id] for pk in placetype_list])
+
+	action_dictionary = {}
+	for action in actions:
+		new_action = Action(action_name=action)
+		db.session.add(new_action)
+		db.session.commit()
+		action_dictionary[action] = new_action.action_id
+
+	mood_dictionary = {}
+	for mood in moods:
+		new_mood = Mood(mood_name=mood)
+		db.session.add(new_mood)
+		db.session.commit()
+		mood_dictionary[mood] = new_mood.mood_id
+	
+	for connection in placetypes_to_activities:
+		new_connection = Placetype_and_Activity(placetype_id=connection[0], activity_id=connection[1])
+		db.session.add(new_connection)
+		db.session.commit()
+
+	for connection in moods_to_activites:
+		new_connection = Mood_and_Activity(mood_id=mood_dictionary[connection[0]], activity_id=connection[1])
+		db.session.add(new_connection)
+		db.session.commit()
+	
+	for connection in actions_to_activities:
+		new_connection = Action_and_Activity(action_id=action_dictionary[connection[0]], activity_id=connection[1])
+		db.session.add(new_connection)
+		db.session.commit()
+
+
 
 if __name__=='__main__':
 	main()

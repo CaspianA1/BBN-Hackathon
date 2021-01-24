@@ -57,7 +57,8 @@ def filter_by_criteria(activities, criteria):
 	if not activities:
 		return activities
 	for criterion in criteria:
-		if not (activity := activities[0]).matches_criteria(criterion):
+		activity = activities[0]
+		if not activity.matches_criteria(criterion):
 			return filter_by_criteria(activities[1:], criteria)
 	return [activity] + filter_by_criteria(activities[1:], criteria)
 
@@ -71,12 +72,12 @@ if __name__ == "__main__":
 	print(r[0].name)
 """
 
-def nearby_locs_from_type(api_key, radius, type_name, keyword):
+def nearby_locs_from_type(api_key, radius, type_names, keyword):
 	base = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?"
 
 	params = "location={}&radius={}&type={}&keyword={}&key={}".format(
 		os.popen("curl ipinfo.io/loc").read(),
-		radius, type_name, keyword, api_key)
+		radius, '|'.join(type_names), keyword, api_key)
 
 	return requests.get(base + params).text
 
