@@ -101,7 +101,7 @@
         </div>
     </div>
     <div class="form-group" style='padding-top: 5%; '>
-      <input type="submit" class="btn btn-secondary" style="min-width: 100%; text-align: center;"name="pageButton" value="Search With Applied Filters">
+      <input type="button" class="btn btn-secondary" style="min-width: 100%; text-align: center;" onclick="filter_search_api();" name="pageButton" value="Search With Applied Filters">
     </div>
 
       </div>
@@ -275,6 +275,7 @@
             .catch(function(res){ console.log(res) });
       }
 
+
       /*
        * Will return relevant activities based on entered mood
        */
@@ -294,6 +295,57 @@
         })
         .catch(function(res){ console.log(res) });
       }
+
+
+
+      function filter_search_api(){
+        //activites, radius, price_range, prefer_indoor
+
+        payload = {}
+        //activities
+        if (document.getElementById('activityCheck').checked){
+          payload["activities"] = document.getElementById('curr_select').dataset.names.split(',');
+        }
+        
+        //radius
+        if (document.getElementById('radiusCheck').checked){
+          payload["radius"] = document.getElementById('radiusFilter').value;
+        }
+
+        //price_range
+        if (document.getElementById('priceCheck').checked){
+          payload["price_range"] = document.getElementById('priceRange').value;
+        }
+
+        //prefer_indoor
+        payload["prefer_indoor"] = 3;
+
+        if (document.getElementById('indoorFilter1').checked){
+          payload["prefer_indoor"] = 1;
+        }else if (document.getElementById('indoorFilter2').checked){
+          payload["prefer_indoor"] = 2;
+        }else if (document.getElementById('indoorFilter3').checked){
+          payload["prefer_indoor"] = 3;
+        }
+        console.log(payload)
+        
+        fetch("/api/v1/filtersearch",
+        {
+          headers:{
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          method: 'POST',
+          body: JSON.stringify(payload)
+        })
+        .then(res => res.json())
+        .then(result => {
+          console.log(result);
+        })
+        .catch(function(res){ console.log(res) });
+
+      }
+
     </script>
           </div>
           </div>
