@@ -45,29 +45,34 @@ class Activity:
 				dlat, dlong = abs(loc[0] - self.location[0]), abs(loc[1] - self.location[1])
 				return ((dlat + dlong) / 2) < 50
 			elif crit_type == "cheap":
-				return self.cost <= 25
+				return self.cost <= 50
 			elif crit_type == "medium_price":
-				return 50 >= self.cost > 25
+				return 75 > self.cost > 50
 			elif crit_type == "expensive":
-				return self.cost >= 51
+				return self.cost >= 75
 
 def filter_by_criteria(activities, criteria):
 	if not activities:
 		return activities
+	print(f"Activities: {activities}")
 	rest = filter_by_criteria(activities[1:], criteria)
+	print(f"Criteria: {criteria}")
 	for criterion in criteria:
-		if (activity := activities[0]).matches_criteria(criterion):
-			return [activity] + filter_by_criteria(activities[1:], criteria)
-		return rest
+		print(f"One criterion: {criterion}")
+		if not (activity := activities[0]).matches_criteria(criterion):
+			print("Not")
+			return rest
+	return [activity] + rest
 
 if __name__ == "__main__":
 	activities = [
-	Activity("jogging", "recreation", [125.6, 350.0], False, 0),
+	Activity("jogging", "recreation", [125.6, 350.0], False, 3),
 	Activity("hula hoop", "recreation", [345.2, 90.3], True, 10),
-	Activity("library", "academic", [200, 200], True, 0),
-	Activity("outdoor studying", "academic", [300, 300], False, 0)
+	Activity("library", "academic", [200, 200], True, 4),
+	Activity("outdoor studying", "academic", [300, 300], False, 5)
 	]
-	r = filter_by_criteria(activities, [["type", "academic"], ["indoors", False]])
+	r = filter_by_criteria(activities, [["type", "academic"], ["indoors", False], ["expensive", None]])
 	print(f"{r[0].name}, {r[1].name}")
 
 # next: take in place types, using google apis, return locations
+
