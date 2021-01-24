@@ -108,12 +108,18 @@
       <div class="col-md-4">
         <div class="form-group">
           <label for="moodSearchbar">Mood Search</label>
-        <div class="input-group mb-3">
+          <div class="input-group mb-3">
           
-          <input type="text" class="form-control" id="moodSearchbar" placeholder="One Word to Describe How You're Feeling" aria-label="Recipient's username" aria-describedby="button-addon2">
-          <button class="btn btn-outline-secondary" type="button" onclick="mood_search_api();" id="moodButton">Button</button>
+            <input type="text" class="form-control" id="moodSearchbar" placeholder="One Word to Describe How You're Feeling" aria-label="Recipient's username" aria-describedby="button-addon2">
+            <button class="btn btn-outline-secondary" type="button" onclick="mood_search_api();" id="moodButton">Button</button>
+          </div>
+          <div>
+            <h5>The moods that match your mood the most:</h5>
+            <div id="mood_search_result">
+
+            </div>
+          </div>
         </div>
-      </div>
       </div>
     
       <!-- <div class="col-md-4">
@@ -254,7 +260,17 @@
                 body: JSON.stringify({word: document.getElementById('moodSearchbar').value.trim().split(' ')[0]})
             })
             .then(res => res.json())
-            .then(result => {console.log(result)})
+            .then(result => {
+              console.log(result);
+              var tempInnerHtml = "";
+              console.log("result.payload: " + result.payload);
+              for(var i=0;i<result.payload.length;i++) {
+                console.log("result.payload[i]: " + result.payload[i]);
+                tempInnerHtml = tempInnerHtml + result.payload[i][1] + "<br>";
+              }
+              tempInnerHtml = tempInnerHtml + "</table>";
+              document.getElementById('mood_search_result').innerHTML = tempInnerHtml;
+            })
             .catch(function(res){ console.log(res) });
       }
     </script>
