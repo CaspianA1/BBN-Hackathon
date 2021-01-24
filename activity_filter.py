@@ -28,7 +28,8 @@ if __name__ == "__main__":
 ##############
 
 class Activity:
-	def __init__(self, type_: str, location: list, inside: bool, cost: int):
+	def __init__(self, name: str, type_: str, location: list, inside: bool, cost: int):
+		self.name = name
 		self.type = type_
 		self.location = location
 		self.inside = inside
@@ -39,10 +40,10 @@ class Activity:
 			if crit_type == "type" or crit_type == "indoors":
 				# crit val is another location type or an indoors status
 				return self.type == crit_val
-			elif crit_type == "location":
-				# crit cal is a pair of lat and long
+			elif crit_type == "closeness":
+				# crit val is a pair of lat and long
 				dlat, dlong = abs(loc[0] - self.location[0]), abs(loc[1] - self.location[1])
-				return ((dlat + dlong) / 2) < max_dist
+				return ((dlat + dlong) / 2) < 50
 			elif crit_type == "cheap":
 				return self.cost <= 25
 			elif crit_type == "medium_price":
@@ -51,20 +52,22 @@ class Activity:
 				return self.cost >= 51
 
 def filter_by_criteria(activities, criteria):
-	if not criteria:
+	if not activities:
 		return activities
-	elif matches_criteria(activity := activities[0], criterion := criteria[0]):
-		return [activity] + filter_by_criteria(activities[1:], criteria[1:])
-	else:
-		return filter_by_criteria(activities[1:], criteria[1:])
-
+	rest = filter_by_criteria(activities[1:], criteria)
+	for criterion in criteria:
+		if (activity := activities[0]).matches_criteria(criterion):
+			return [activity] + filter_by_criteria(activities[1:], criteria)
+		return rest
 
 if __name__ == "__main__":
-	pass
+	activities = [
+	Activity("jogging", "recreation", [125.6, 350.0], False, 0),
+	Activity("hula hoop", "recreation", [345.2, 90.3], True, 10),
+	Activity("library", "academic", [200, 200], True, 0),
+	Activity("outdoor studying", "academic", [300, 300], False, 0)
+	]
+	r = filter_by_criteria(activities, [["type", "academic"], ["indoors", False]])
+	print(f"{r[0].name}, {r[1].name}")
 
-
-# a = Activity("", [], False, 51)
-
-# print(a.price_bracket())
-
-# take in place types, using google apis, return locations
+# next: take in place types, using google apis, return locations
