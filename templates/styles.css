@@ -43,12 +43,16 @@ h1 {
 	height: 75px;
 }
 
+.btn-secondary {
+	background-color: #F8E9A1;
+}
+
 /*activity*/
 .btn .btn-secondary .btn-block {
 	font-family: 'Open Sans', Sans-Serif;
 	font-size: 15px;
 	color: white;
-	/* background-color: #F8E9A1; */
+	background-color: #F8E9A1;
 	height: 50px;
 
 }
