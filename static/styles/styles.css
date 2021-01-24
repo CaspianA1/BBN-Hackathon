@@ -3,21 +3,28 @@
 
 
 
-@font-face {
+/* @font-face {
 	font-family: 'Work Sans', Sans-Serif;
 	font-size: 45px;
 	
 	font-family: 'Open Sans', Sans-Serif;
 	font-size: 15px;
+} */
+
+body {
+	background-color: #A8D0E6;
 }
 
 h1 {
-	font-family: 'Varela Round', Sans-Serif;
+	font-family:'Varela',Sans-Serif;
 	font-size: 48px;
 	color: white;
 	background-color: #24305E;
-	width: 500px;
-	height: 200px;
+	width: 100%;
+	margin: 0px;
+	padding: 25px;
+	border-radius: 25px;
+	/* height: 200px; */
 
 }
 
@@ -35,7 +42,7 @@ h1 {
 	font-family: 'Varela Round', Sans-Serif;
 	font-size: 30px;
 	color: white;
-	background-color: #F76C6C;
+	/* background-color: #F76C6C; */
 	height: 75px;
 }
 
@@ -46,7 +53,6 @@ h1 {
 	color: white;
 	background-color: #F8E9A1;
 	height: 50px;
-
 }
 
 /*price bar*/
@@ -71,7 +77,7 @@ h1 {
 	font-family: 'Open Sans', Sans-Serif;
 	font-size: 15px;
 	color: white;
-	background-color: #F8E9A1;
+	/* background-color: #F8E9A1; */
 	height: 75px;
 }
 
@@ -84,6 +90,7 @@ h5 {
 	background-color: #24305E;
 	width: 500px;
 	height: 200px;
+	padding: 10px;
 }
 
 .output-moods {
