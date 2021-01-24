@@ -1,5 +1,6 @@
 from difflib import SequenceMatcher as sm
 from functools import reduce
+import os, requests
 
 ############ this is based on string comparisons
 def sort_by_similarity(similarities):
@@ -60,6 +61,7 @@ def filter_by_criteria(activities, criteria):
 			return filter_by_criteria(activities[1:], criteria)
 	return [activity] + filter_by_criteria(activities[1:], criteria)
 
+"""
 if __name__ == "__main__":
 	activities = [Activity("jogging", "recreation", [125.6, 350.0], False, 3),
 		Activity("hula hoop", "recreation", [345.2, 90.3], True, 10),
@@ -67,5 +69,17 @@ if __name__ == "__main__":
 		Activity("outdoor studying", "academic", [300, 300], False, 5)]
 	r = filter_by_criteria(activities, [["inside", True], ["medium_cost", None]])
 	print(r[0].name)
+"""
 
-# next: take in place types, using google apis, return locations
+def nearby_locs_from_type(api_key, radius, type_name, keyword):
+	base = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?"
+
+	params = "location={}&radius={}&type={}&keyword={}&key={}".format(
+		os.popen("curl ipinfo.io/loc").read(),
+		radius, type_name, keyword, api_key)
+
+	return requests.get(base + params).text
+
+if __name__ == "__main__":
+	response = nearby_locs_from_type("AIzaSyB2TMvSqQ9or3Q4YqgGdnRHcX6lgPhYiJU", 50, "dentist", "inside")
+	print(response)
