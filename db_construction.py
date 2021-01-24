@@ -10,7 +10,7 @@ import requests, json, datetime
 app = Flask(__name__)
 
 activity_group = """************ FOOD ************
-MOOD: INDULGE YOURSELF / QUICK BITE / YUM / DELICACY / FANCY / HUNGRY
+MOOD: INDULGE YOURSELF / QUICK EATS / YUM / DELICACY / FANCY / HUNGRY
 ACTION: EAT
 	bakery
 	cafe
@@ -37,7 +37,7 @@ ACTION: BUYING
 
 
 ************ STORE - SHOPPING ************
-MOOD: INDULGE YOURSELF / SHOPPING SPREE / SPENDY / INTENSE
+MOOD: INDULGE YOURSELF / SPENDY / INTENSE
 ACTION: SHOPPING
 	shoe_store
 	shopping_mall
