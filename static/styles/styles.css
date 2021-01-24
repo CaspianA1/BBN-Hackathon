@@ -48,8 +48,9 @@ h1 {
 	color: white;
 	background-color: #F76C6C;
 	border-radius: 25px;
-	height: 70px;
-	padding:20px;
+	padding: 20px;
+	margin-bottom: 10px;
+	margin-top: 30px;
 }
 
 /*activity*/
@@ -67,9 +68,9 @@ h1 {
 	font-family: 'Open Sans', Sans-Serif;
 	font-size: 15px;
 	color: white;
-	background-color: #f76c6c;
+	background-color: #f8e9a1;
 	border-radius: 25px;
-	color: white;
+	color: grey;
 }
 
 
@@ -83,13 +84,19 @@ h1 {
 	font-size: 15px;
 }
 
+.input-group-text {
+	background-color: #f8e9a1;
+	border: 0px;
+	margin-bottom: 10px;
+}
+
 
 /*outdoor-indoor and activity buttons*/
 .form-check {
 	font-family: 'Open Sans', Sans-Serif;
 	font-size: 15px;
-	color: white;
-	background-color: #f76c6c;
+	color: grey;
+	background-color: #f8e9a1;
 	padding-bottom: 5px;
 	padding-top: 5px;
 	padding-left: 30px;
