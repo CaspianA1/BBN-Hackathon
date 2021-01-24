@@ -8,7 +8,8 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from db_construction import Activity, Placetype, Comment, Action, Mood_and_Activity, Mood
 from helper import vector_cosine_similarity, getPlaces, filter_bad_businesses_and_get_top_5
 from activity_filter import nearby_locs_from_type
-import requests, json, datetime, nltk, ssl, spacy, en_core_web_md, math
+import requests, json, datetime, nltk, ssl, spacy, en_core_web_md, math, multiprocessing as mp
+
 
 try:
 	_create_unverified_https_context = ssl._create_unverified_context
@@ -151,4 +152,5 @@ def filtersearch():
 
 
 if __name__=='__main__':
+	mp.set_start_method('spawn')
 	app.run(debug=True)
