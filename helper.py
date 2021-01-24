@@ -1,4 +1,4 @@
-from db_construction import Activity, Placetype, Comment, Action, Mood
+from db_construction import Activity, Placetype, Comment, Action, Mood, Placetype_and_Activity, Mood_and_Activity, Action_and_Activity
 import math
 
 
@@ -23,10 +23,11 @@ input: checkList --> a list of the items checked
 output: a list of the associated Placetype Ids
 """
 def getPlaces(checkList):
-    finalString = ""
     listOfPlaces = set()
     for i in range(len(checkList)):
-        activityList = Activity.query.filter_by(activity_name = checkList[i]).first()
-        finalString = finalString + activityList
-        listOfPlaces.union(set(activityList.split(' ')))
+        curr_activity = Activity.query.filter_by(activity_name = checkList[i]).first()
+
+        placetypes_with_this_activity = Placetype_and_Activity.query.filter_by(activity_id=curr_activity.activity_id).all()
+        for pk in [i.placetype_id for i in placetypes_with_this_activity]:
+            listOfPlaces.add(Placetype.query.filter_by(type_id=pk).first().type_name)
     return listOfPlaces
