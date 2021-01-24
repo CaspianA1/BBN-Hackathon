@@ -283,48 +283,52 @@ class Comment(db.Model):
     def __repr__(self):
         return f"Comment {self.comment_id} Written by {self.author_name} with message {self.message}"
 
-db.create_all()
+def main():
+	db.create_all()
 
-for place_type in s.split('\n'):
-    new_type = Placetype(type_name=place_type.strip())
-    db.session.add(new_type)
-    db.session.commit()
+	for place_type in s.split('\n'):
+		new_type = Placetype(type_name=place_type.strip())
+		db.session.add(new_type)
+		db.session.commit()
 
-actions = set()
+	actions = set()
 
-moods = set()
+	moods = set()
 
-actions_to_activities = []
+	actions_to_activities = []
 
-moods_to_activites = []
+	moods_to_activites = []
 
-placetypes_to_activities = []
+	placetypes_to_activities = []
 
-for section in activity_group.strip().split('\n\n\n'):
-    section_name = section.strip().split('\n')[0].strip('*').strip()
-    print(section_name)
-    new_activity = Activity(activity_name=section_name)
-    db.session.add(new_activity)
-    db.session.commit()
-    new_actions = []
-    new_moods = []
-    for string in section.split('ACTION: ')[1].strip().split('\n')[0].strip().split('/'):
-        new_actions.append(string.strip())
-        actions_to_activities.append([string.strip(), new_activity.activity_id])
-    
+	for section in activity_group.strip().split('\n\n\n'):
+		section_name = section.strip().split('\n')[0].strip('*').strip()
+		print(section_name)
+		new_activity = Activity(activity_name=section_name)
+		db.session.add(new_activity)
+		db.session.commit()
+		new_actions = []
+		new_moods = []
+		for string in section.split('ACTION: ')[1].strip().split('\n')[0].strip().split('/'):
+			new_actions.append(string.strip())
+			actions_to_activities.append([string.strip(), new_activity.activity_id])
+		
 
-    for string in section.split('\n')[1].strip('MOOD: ').strip().split('/'):
-        new_moods.append(string.strip())
-        moods_to_activites.append([string.strip(), new_activity.activity_id])
+		for string in section.split('\n')[1].strip('MOOD: ').strip().split('/'):
+			new_moods.append(string.strip())
+			moods_to_activites.append([string.strip(), new_activity.activity_id])
 
 
-    actions = actions.union(set(new_actions))
+		actions = actions.union(set(new_actions))
 
-    moods = moods.union(set(new_moods))
+		moods = moods.union(set(new_moods))
 
-    placetype_list = [Placetype.query.filter_by(type_name=string.strip()).first().type_id for string in section.split('ACTION')[1].strip().split('\n')[1:] if len(string.strip()) > 0]
-    
-    placetypes_to_activities.extend([[pk, new_activity.activity_id] for pk in placetype_list])
+		placetype_list = [Placetype.query.filter_by(type_name=string.strip()).first().type_id for string in section.split('ACTION')[1].strip().split('\n')[1:] if len(string.strip()) > 0]
+		
+		placetypes_to_activities.extend([[pk, new_activity.activity_id] for pk in placetype_list])
+
+if __name__=='__main__':
+	main()
 
 
 

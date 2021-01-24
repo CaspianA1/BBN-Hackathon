@@ -1,14 +1,15 @@
 {%extends "layout.html"%}
 
 {% block body %}
-<h1>What do you want to do today?</h1>
+
 <form action="/" method="post">
-    <div class="container">
-      <div class="row">
+    <div class="container" style='padding:5%'>
+      <!-- <div class="row">
         <button type="button" class="btn btn-light btn-block" id="filtersButton" onclick="checkFilters(); return false;">Filters</button>
-      </div>
-      <div style="padding:10px" id="divideFilters"></div>
-      <div class="row" id="filters" style="min-height: 50%;" hidden>
+      </div> -->
+      <h1>What do you want to do today?</h1>
+      <hr class="dropdown-divider">
+      <div class="row" id="filters" style="min-height: 50%;">
         <div class="col-md-4">
         <div class="form-group">
             <label for="activityButton">Possible Activities</label>
@@ -19,8 +20,9 @@
                 </div>
                 </div>
                   <button type="button" class="btn btn-secondary btn-block" id="activityFilter" style="min-width: 100%;" data-bs-toggle="modal" data-bs-target="#exampleModal" disabled>
-                    Choose
+                    Open Menu
                   </button>
+                  <span class='input-group-text' data-names="" id='curr_select' style="max-width: 100%; display: block; width: 100%; word-wrap: break-word; word-break: break-all;" hidden>None Selected</span>
 
 <!-- Modal for Selecting Activities -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -33,14 +35,13 @@
       <div class="modal-body">
         {% for activity in activities %}
         <div class='form-check'>
-        <label class="form-check-label" for="typeCheck@{{activity}}">{{activity}}</label>
-        <input class='form-check-input' name='typeCheck@{{activity}}' type='checkbox'>
+        <label class="form-check-label" id="typeLabel@{{activity.activity_id}}" for="typeCheck@{{activity.activity_id}}">{{activity.activity_name}}</label>
+        <input class='form-check-input' name='typeCheck@{{activity.activity_id}}' id='typeCheck@{{activity.activity_id}}' onchange="change_select(this);" type='checkbox'>
       </div>
       {% endfor %}
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>
@@ -122,6 +123,33 @@
         }
       }
 
+      function change_select(element){
+        var name = document.getElementById(element.id.replace('typeCheck@', 'typeLabel@')).innerHTML;
+        var list = [];
+        if (document.getElementById('curr_select').dataset.names.length != 0){
+          list = document.getElementById('curr_select').dataset.names.split(',');
+        }
+        if (list.includes(name)){
+          list.splice(list.indexOf(name),1);
+        }else{
+          list.push(name);
+        }
+        if (list.length > 0){
+          var str = `Currently Selected: ${list.join(', ')}`;
+          if (str.length > 40){
+            document.getElementById('curr_select').innerHTML = `Currently Selected: ${list.length} Activities`;
+          }else{
+            document.getElementById('curr_select').innerHTML = str;
+          }
+          
+          
+        }else{
+          document.getElementById('curr_select').innerHTML = "None Selected";
+        }
+        
+        document.getElementById('curr_select').dataset.names = list.join(',');
+      }
+
       function disableElements(element){
         if (element.id.includes('price')){
           if (element.checked){
@@ -136,8 +164,17 @@
         }else{
           if (element.checked){
             document.getElementById(element.id.replace('Check', 'Filter')).disabled = false;
+            if (element.id.includes('activity')){
+              document.getElementById('curr_select').hidden = false;
+            }
           }else{
-            document.getElementById(element.id.replace('Check', 'Filter')).disabled = true;
+            var filter_element = document.getElementById(element.id.replace('Check', 'Filter'))
+            filter_element.disabled = true;
+            if (element.id.includes('radius')){
+              filter_element.value = filter_element.placeholder;
+            }else if (element.id.includes('activity')){
+              document.getElementById('curr_select').hidden = true;
+            }
           }
         }
 
