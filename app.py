@@ -69,7 +69,6 @@ def moodsearch():
     moods = ['happy', 'sad', 'tired', 'angry', 'excited']
     if request.method == 'POST':
         data = request.get_json()
-        print(data)
         vec = nlp(data['word'])
         mood_doc = nlp(' '.join(moods))
         similarities = []
