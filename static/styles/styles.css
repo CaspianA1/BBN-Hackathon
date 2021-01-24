@@ -37,13 +37,20 @@ h1 {
 	width: 400px;
 }
 
+.col-md-4 {
+	margin: 50px;
+}
+
 /*filter types*/
 .filter-type {
 	font-family: 'Varela Round', Sans-Serif;
 	font-size: 30px;
 	color: white;
-	/* background-color: #F76C6C; */
-	height: 75px;
+	background-color: #F76C6C;
+	border-radius: 25px;
+	padding: 20px;
+	margin-bottom: 10px;
+	margin-top: 30px;
 }
 
 /*activity*/
@@ -61,11 +68,15 @@ h1 {
 	font-family: 'Open Sans', Sans-Serif;
 	font-size: 15px;
 	color: white;
-	background-color: #f76c6c;
+	background-color: #f8e9a1;
 	border-radius: 25px;
-	color: white;
+	color: grey;
 }
 
+
+.modal {
+	background-color: #A8D0E6;
+}
 
 /*radius and mood*/
 .form-control {
@@ -73,13 +84,19 @@ h1 {
 	font-size: 15px;
 }
 
+.input-group-text {
+	background-color: #f8e9a1;
+	border: 0px;
+	margin-bottom: 10px;
+}
+
 
 /*outdoor-indoor and activity buttons*/
 .form-check {
 	font-family: 'Open Sans', Sans-Serif;
 	font-size: 15px;
-	color: white;
-	background-color: #f76c6c;
+	color: grey;
+	background-color: #f8e9a1;
 	padding-bottom: 5px;
 	padding-top: 5px;
 	padding-left: 30px;
@@ -93,9 +110,10 @@ h5 {
 	font-size: 25px;
 	color: white;
 	background-color: #24305E;
+	border-radius: 25px;
 	width: 500px;
-	height: 200px;
-	padding: 10px;
+	/* height: 200px; */
+	padding: 30px;
 }
 
 .output-moods {

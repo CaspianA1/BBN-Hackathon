@@ -22,10 +22,10 @@
                     <input type="checkbox" name="activityCheck" id="activityCheck" onclick="disableElements(this);"  aria-label="Checkbox for following text input">
                 </div>
                 </div>
-                  <button type="button" class="btn btn-secondary btn-block" id="activityFilter" style="min-width: 100%;" data-bs-toggle="modal" data-bs-target="#exampleModal" disabled>
+                  <button type="button" class="btn btn-secondary btn-block" id="activityFilter" style="min-width: 100%; background-color: #f8e9a1; border: 0px; color: grey; margin-bottom: 10px; border-radius: 10px;" data-bs-toggle="modal" data-bs-target="#exampleModal" disabled>
                     Open Menu
                   </button>
-                  <span class='input-group-text' data-names="" id='curr_select' style="max-width: 100%; display: block; width: 100%; word-wrap: break-word; word-break: break-all;" hidden>None Selected</span>
+                  <span class='input-group-text' data-names="" id='curr_select' style="max-width: 100%; display: block; width: 100%; word-wrap: break-word; word-break: break-all; background-color: #f8e9a1; border: 0px; color: grey;margin-bottom: 10px; border-radius: 10px" hidden>None Selected</span>
 
 <!-- Modal for Selecting Activities -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -115,7 +115,7 @@
         </div>
     </div>
     <div class="form-group" style='padding-top: 5%; '>
-      <input type="button" class="btn btn-secondary" style="min-width: 100%; text-align: center;" onclick="filter_search_api();" name="pageButton" value="Search With Applied Filters">
+      <input type="button" class="btn btn-secondary" style="min-width: 100%; text-align: center; background-color:#24305e;color: white;" onclick="filter_search_api();" name="pageButton" value="Search With Applied Filters">
     </div>
 
     <div id="search_results">
