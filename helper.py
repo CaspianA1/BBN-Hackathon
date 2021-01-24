@@ -15,8 +15,9 @@ def vector_cosine_similarity(vec1,vec2):
         dot_product += v_1 * vec2[i]
         vec1_sum += v_1**2
         vec2_sum += vec2[i]**2
-
-    return dot_product/(math.sqrt(vec1_sum)*math.sqrt(vec2_sum))
+    n = (math.sqrt(vec1_sum)*math.sqrt(vec2_sum))
+    
+    return (dot_product/n) if n > 0 else 0
 
 """
 input: checkList --> a list of the items checked
