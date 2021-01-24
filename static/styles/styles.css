@@ -37,13 +37,19 @@ h1 {
 	width: 400px;
 }
 
+.col-md-4 {
+	margin: 50px;
+}
+
 /*filter types*/
 .filter-type {
 	font-family: 'Varela Round', Sans-Serif;
 	font-size: 30px;
 	color: white;
-	/* background-color: #F76C6C; */
-	height: 75px;
+	background-color: #F76C6C;
+	border-radius: 25px;
+	height: 70px;
+	padding:20px;
 }
 
 /*activity*/
@@ -66,6 +72,10 @@ h1 {
 	color: white;
 }
 
+
+.modal {
+	background-color: #A8D0E6;
+}
 
 /*radius and mood*/
 .form-control {
@@ -93,9 +103,10 @@ h5 {
 	font-size: 25px;
 	color: white;
 	background-color: #24305E;
+	border-radius: 25px;
 	width: 500px;
-	height: 200px;
-	padding: 10px;
+	/* height: 200px; */
+	padding: 30px;
 }
 
 .output-moods {
