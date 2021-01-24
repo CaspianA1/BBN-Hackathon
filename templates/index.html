@@ -104,6 +104,10 @@
       <input type="button" class="btn btn-secondary" style="min-width: 100%; text-align: center;" onclick="filter_search_api();" name="pageButton" value="Search With Applied Filters">
     </div>
 
+    <div id="search_results">
+
+    </div>
+
       </div>
       <div class="col-md-4">
         <div class="form-group">
@@ -343,8 +347,49 @@
             });
           }
           console.log(result.status);
+          // console.log("RESULT");
+          // console.log(result.results);
+          var tempInnerHtml = "";
+          for(var i = 0; i<result.results.length;i++) {
+            tempInnerHtml = tempInnerHtml + "<div id=\"search-result-element-"+i+"\">";
+            tempInnerHtml = tempInnerHtml + "<h5>" + result.results[i].name + "</h5>";
+            tempInnerHtml = tempInnerHtml + "<p>Location: " + result.results[i].vicinity + "</p>";
+
+            // location type
+            // tempInnerHtml = tempInnerHtml + "<p>Location Type: ";
+            // for(var j=0;j<result.results[i].types.length;i++) {
+            //   tempInnerHtml = tempInnerHtml + result.results[i].types[j] +" "
+            // }
+            // tempInnerHtml = tempInnerHtml + "</p>";
+
+            // price level
+            tempInnerHtml = tempInnerHtml + "<p>Price Level: ";
+            if(result.results[i].price_level=null) {
+              tempInnerHtml = tempInnerHtml + "Free! </p>";
+            }
+            else {
+              for(var j =0;j<result.results[i].price_level;j++) {
+                tempInnerHtml = tempInnerHtml + "$";
+              }
+              tempInnerHtml = tempInnerHtml + "</p>";
+            }
+
+            // will use the following for photos; it's a key for google photo references
+            // photo_reference = result.results[i].photos[0].photo_reference;
+
+            tempInnerHtml = tempInnerHtml + "</div>";
+          }
+          if(tempInnerHtml.length==0) {
+            document.getElementById('search_results').innerHTML = "<p>Sorry, we couldn't find any results that matched your interests. Please try again!</p>";
+          }
+          else {
+            document.getElementById('search_results').innerHTML = tempInnerHtml;
+          }
+          console.log(tempInnerHtml);
         })
-        .catch(function(res){ console.log(res) });
+        .catch(function(res){
+          console.log(res);
+        });
 
       }
 
