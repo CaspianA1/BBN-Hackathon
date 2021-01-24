@@ -20,7 +20,7 @@ app.config["SESSION_TYPE"] = 'filesystem'
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    if request.method =='GET':
+    if request.method =='GET':# Activity.query.order_by(Activity.activity_name).all()
         return render_template("index.html", activities=Activity.query.order_by(Activity.activity_name).all(), results=False)
     else:
         #checklist will be all the filtered activites
@@ -31,7 +31,7 @@ def index():
 
         
 
-        return render_template("index.html", activities=Activity.query.order_by(Activity.activity_name).all(), results=)
+        return render_template("index.html", activities=Activity.query.order_by(Activity.activity_name).all())
         
 
 """

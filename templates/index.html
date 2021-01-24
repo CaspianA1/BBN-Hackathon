@@ -5,29 +5,107 @@
 <form action="/" method="post">
     <div class="container">
       <div class="row">
-        <button class="btn btn-light btn-block" id="filtersButton" onclick="checkFilters(); return false;">Filters</button>
+        <button type="button" class="btn btn-light btn-block" id="filtersButton" onclick="checkFilters(); return false;">Filters</button>
       </div>
       <div style="padding:10px" id="divideFilters"></div>
-      <div class="row" id="filters" style="min-height: 100px;" hidden>
+      <div class="row" id="filters" style="min-height: 50%;" hidden>
         <div class="col-md-4">
-        {% for activity in activities %}
         <div class="form-group">
-            <label for="typeFilter">{{activity.activity_name}}</label>
-            <div class="input-group mb-3">
+            <label for="activityButton">Possible Activities</label>
+            <div class="input-group mb-3" >
                 <div class="input-group-prepend">
                 <div class="input-group-text">
-                    <input type="checkbox" id='hello' name="typeCheck@{{activity.activity_id}}" aria-label="Checkbox for following text input">
+                    <input type="checkbox" name="activityCheck" id="activityCheck" onclick="disableElements(this);"  aria-label="Checkbox for following text input">
                 </div>
                 </div>
-                <input type="text" class="form-control" id='bye' name="typeFilter" aria-label="Text input with checkbox" placeholder="Business Type">
+                  <button type="button" class="btn btn-secondary btn-block" id="activityFilter" style="min-width: 100%;" data-bs-toggle="modal" data-bs-target="#exampleModal" disabled>
+                    Choose
+                  </button>
+
+<!-- Modal for Selecting Activities -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Possible Activities</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        {% for activity in activities %}
+        <div class='form-check'>
+        <label class="form-check-label" for="typeCheck@{{activity}}">{{activity}}</label>
+        <input class='form-check-input' name='typeCheck@{{activity}}' type='checkbox'>
+      </div>
+      {% endfor %}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End of Modal -->
+
             </div>
         </div>
-        {% endfor %}
+        <div class="form-group">
+          <label for="radiusFilter">Radius Filter (by KM)</label>
+          <div class="input-group mb-3">
+              <div class="input-group-prepend">
+              <div class="input-group-text">
+                  <input type="checkbox" name="radiusCheck" id="radiusCheck" onclick="disableElements(this);" aria-label="Checkbox for following text input">
+              </div>
+              </div>
+              <input type="number" class="form-control" name="radiusFilter" id="radiusFilter" style="min-width: 100%;" aria-label="Text input with checkbox" placeholder="Distance" disabled>
+          </div>
       </div>
+      <div class='form-group'>
+        <label for="priceRange" class="form-label">Price Range</label>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+          <div class="input-group-text">
+              <input type="checkbox" name="priceCheck" id="priceCheck" onclick="disableElements(this);" aria-label="Checkbox for following text input">
+          </div>
+          
+          </div>
+          <span class="input-group-text" id="priceVisual" style="min-width: 100%; min-height: 50px" hidden></span>
+          <input type="range" class="form-range" min="1" max="5" id="priceRange" name="priceRange" onchange="updateVisual(this);" oninput="updateVisual(this);" disabled>
+              </div>
+
+      </div>
+      <div class="form-group">
+        <label for="indoorCheck">Indoor vs Outdoor</label>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="indoorFilter" id="indoorFilter1" value="1" checked>
+          <label class="form-check-label" for="indoorFilter1">
+            Indoor
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="indoorFilter" id="indoorFilter2" value="2">
+          <label class="form-check-label" for="indoorFilter1">
+            Outdoor
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="indoorFilter" id="indoorFilter3" value="3">
+          <label class="form-check-label" for="indoorFilter2">
+            No Preference
+          </label>
+        </div>
+    </div>
+    <div class="form-group" style='padding-top: 5%; '>
+      <input type="submit" class="btn btn-secondary" style="min-width: 100%; text-align: center;"name="pageButton" value="Search With Applied Filters">
+    </div>
+
+      </div>
+      <!-- <div class="col-md-4">
+        
+      </div> -->
     
-      <div class="col-md-4">
-            <input type="submit" class="btn btn-secondary btn-block h-50" name="pageButton" value="Search With Applied Filters">
-      </div>
+      <!-- <div class="col-md-4">
+      </div> -->
         </div>
       </div>
     </div>
@@ -42,6 +120,33 @@
           document.getElementById("divideFilters").className = "";
           document.getElementById("filtersButton").innerHTML = "Filters";
         }
+      }
+
+      function disableElements(element){
+        if (element.id.includes('price')){
+          if (element.checked){
+            document.getElementById(element.id.replace('Check', 'Range')).disabled = false;
+            document.getElementById('priceVisual').hidden = false; 
+            updateVisual(document.getElementById('priceRange'));
+          }else{
+            document.getElementById(element.id.replace('Check', 'Range')).disabled = true;
+            document.getElementById('priceVisual').hidden = true;
+          }
+          
+        }else{
+          if (element.checked){
+            document.getElementById(element.id.replace('Check', 'Filter')).disabled = false;
+          }else{
+            document.getElementById(element.id.replace('Check', 'Filter')).disabled = true;
+          }
+        }
+
+      }
+
+      function updateVisual(element){
+        console.log(element.value);
+        console.log("$".repeat(parseInt(element.value)));
+        document.getElementById('priceVisual').innerHTML = "$".repeat(parseInt(element.value));
       }
     </script>
           </div>

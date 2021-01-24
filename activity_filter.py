@@ -56,7 +56,8 @@ def filter_by_criteria(activities, criteria):
 		return activities
 	rest = filter_by_criteria(activities[1:], criteria)
 	for criterion in criteria:
-		if (activity := activities[0]).matches_criteria(criterion):
+		activity = activities[0]
+		if activity.matches_criteria(criterion):
 			return [activity] + filter_by_criteria(activities[1:], criteria)
 		return rest
 
