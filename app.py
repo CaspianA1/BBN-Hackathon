@@ -5,7 +5,7 @@ from flask_mail import Mail
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from tempfile import mkdtemp
 from werkzeug.security import check_password_hash, generate_password_hash
-from db_construction import Activity, Placetype, Comment, Action, Mood
+from db_construction import Activity, Placetype, Comment, Action, Mood_and_Activity, Mood
 from helper import vector_cosine_similarity, getPlaces
 import requests, json, datetime, nltk, ssl, spacy, en_core_web_md, math
 
@@ -76,6 +76,25 @@ def moodsearch():
             similarities.append((vector_cosine_similarity(vec.vector, mood.vector), mood.text))
             
         return jsonify({'payload': sorted(similarities, key=lambda x: x[0], reverse=True)[:5]})
+    else:
+        return render_template('apologies.html')
+
+@app.route('/api/v1/activity_mood_search', methods=['POST'])
+def activity_mood_search():
+    if request.method=='POST':
+        data = request.get_json()
+        # print(data)
+        # print(data['word'])
+        splitData = data['word'].split("<br>")
+        # assuming data is a list
+        result = []
+        for i in range(len(splitData)):
+            mood_query = Mood.query.filter_by(mood_name = splitData[i].upper()).with_entities(Mood.mood_id).all()
+            # [[1, happy], [2, 'sad']]
+            activityIds = Mood_and_Activity.query.filter_by(mood_id = mood_query).with_entities(Activity.activity_id)
+            print(Activity.query.filter_by(activity_id = activityIds).with_entities(Activity.activity_id))
+            result = result + Activity.query.filter_by(activity_id = activityIds).with_entities(Activity.activity_id)
+        return jsonify({"result" : result})
     else:
         return render_template('apologies.html')
 
