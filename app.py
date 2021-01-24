@@ -120,7 +120,7 @@ def filtersearch():
 		data = request.get_json()
 		d = {'key':API_KEY}
 		if 'activities' in data.keys():
-			d['type'] = '|'.join(getPlaces(data['activities']))
+			d['type'] = getPlaces(data['activities'])
 
 		if 'radius' in data.keys():
 			d['radius'] = int(data['radius']) * 1000
@@ -128,7 +128,8 @@ def filtersearch():
 			d['radius'] = 10000
 
 		if 'price_range' in data.keys():
-			d['minprice'] = d['maxprice'] = int(data['price_range'])-1
+			d['minprice'] = max(int(data['price_range'])-2, 0)
+			d['maxprice'] = min(int(data['price_range']), 4)
 		
 		if 'prefer_indoor' in data.keys():
 			preference = int(data['prefer_indoor'])
@@ -136,11 +137,11 @@ def filtersearch():
 				d['keyword'] = 'indoor'
 			elif preference==2:
 				d['keyword'] = 'outdoor'
-		google_data = json.loads(nearby_locs_from_type(d))
-		top_5_hits = filter_bad_businesses_and_get_top_5(list_of_bad_businesses,google_data['results'])
-		if google_data['status'] == 'OK':
+		google_data = nearby_locs_from_type(d)
+		top_5_hits = filter_bad_businesses_and_get_top_5(list_of_bad_businesses,google_data)
+		if len(google_data) > 0:
 			return jsonify({'status':'OK', 'results':top_5_hits})
-		elif 'ZERO_RESULTS' in google_data['status']:
+		else:
 			return jsonify({'status':'No Results', 'results':[]})
 		return render_template('apologies.html')
 	else:

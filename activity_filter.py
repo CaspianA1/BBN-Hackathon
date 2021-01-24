@@ -1,6 +1,6 @@
 from difflib import SequenceMatcher as sm
 from functools import reduce
-import os, requests
+import os, requests, json
 
 ############ this is based on string comparisons
 def sort_by_similarity(similarities):
@@ -74,10 +74,17 @@ if __name__ == "__main__":
 
 def nearby_locs_from_type(d):
 	base = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?"
-	param_list = [f"location={os.popen('curl ipinfo.io/loc').read()}"]
-	for key in d.keys():
-		param_list.append(f"{key}={d[key]}")
+	results = []
+	if 'type' in d.keys():
+		for place_type in d['type']:
+			param_list = [f"location={os.popen('curl ipinfo.io/loc').read()}", f"type={place_type}"]
+			for key in d.keys():
+				if key != 'type':
+					param_list.append(f"{key}={d[key]}")
+			params = '&'.join(param_list)
 
-	params = '&'.join(param_list)
+			g = json.loads(requests.get(base + params).text)
+			if g['status'] == 'OK':
+				results.extend(g['results'])
 
-	return requests.get(base + params).text
+	return results
