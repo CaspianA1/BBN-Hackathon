@@ -105,9 +105,16 @@
     </div>
 
       </div>
-      <!-- <div class="col-md-4">
-        
-      </div> -->
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="moodSearchbar">Mood Search</label>
+        <div class="input-group mb-3">
+          
+          <input type="text" class="form-control" id="moodSearchbar" placeholder="One Word to Describe How You're Feeling" aria-label="Recipient's username" aria-describedby="button-addon2">
+          <button class="btn btn-outline-secondary" type="button" onclick="mood_search_api();" id="moodButton">Button</button>
+        </div>
+      </div>
+      </div>
     
       <!-- <div class="col-md-4">
       </div> -->
@@ -234,6 +241,21 @@
         console.log(element.value);
         console.log("$".repeat(parseInt(element.value)));
         document.getElementById('priceVisual').innerHTML = "$".repeat(parseInt(element.value));
+      }
+
+      function mood_search_api(){
+        fetch("/api/v1/moodsearch",
+            {
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json'
+                },
+                method: "POST",
+                body: JSON.stringify({word: document.getElementById('moodSearchbar').value.trim().split(' ')[0]})
+            })
+            .then(res => res.json())
+            .then(result => {console.log(result)})
+            .catch(function(res){ console.log(res) });
       }
     </script>
           </div>
