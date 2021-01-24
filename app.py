@@ -87,7 +87,7 @@ def moodsearch():
 	if request.method == 'POST':
 		data = request.get_json()
 		vec = nlp(data['word'])
-		mood_doc = [nlp(mood) for mood in moods]
+		mood_doc = [nlp(mood.lower()) for mood in moods]
 		similarities = []
 		for mood in mood_doc:
 			similarities.append((vector_cosine_similarity(vec.vector, mood.vector), mood.text))
@@ -106,11 +106,9 @@ def activity_mood_search():
 		result = []
 		for i in range(len(splitData)):
 			mood_query = Mood.query.filter_by(mood_name = splitData[i].upper()).with_entities(Mood.mood_id).all()
-			activityIds = Mood_and_Activity.query.filter_by(mood_id = mood_query).with_entities(Activity.activity_id).all()
-			print(Activity.query.filter_by(activity_id = activityIds).with_entities(Activity.activity_id)).all()
-			activity_list = Activity.query.filter_by(activity_id = activityIds).with_entities(Activity.activity_id).all()
-			for j in range(len(activity_list)):
-				result = result + activity_list[j]
+			activityIds = Mood_and_Activity.query.filter(Mood_and_Activity.mood_id.in_([i[0] for i in mood_query])).with_entities(Activity.activity_id).all()
+			activity_list = Activity.query.filter(Activity.activity_id.in_([i[0] for i in activityIds])).with_entities(Activity.activity_id).all()
+			result.extend([i[0] for i in activity_list])
 
 		return jsonify({"result" : result})
 	else:
