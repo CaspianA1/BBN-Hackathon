@@ -86,14 +86,15 @@ def activity_mood_search():
         # print(data)
         # print(data['word'])
         splitData = data['word'].split("<br>")
-        # assuming data is a list
         result = []
         for i in range(len(splitData)):
             mood_query = Mood.query.filter_by(mood_name = splitData[i].upper()).with_entities(Mood.mood_id).all()
-            # [[1, happy], [2, 'sad']]
-            activityIds = Mood_and_Activity.query.filter_by(mood_id = mood_query).with_entities(Activity.activity_id)
-            print(Activity.query.filter_by(activity_id = activityIds).with_entities(Activity.activity_id))
-            result = result + Activity.query.filter_by(activity_id = activityIds).with_entities(Activity.activity_id)
+            activityIds = Mood_and_Activity.query.filter_by(mood_id = mood_query).with_entities(Activity.activity_id).all()
+            print(Activity.query.filter_by(activity_id = activityIds).with_entities(Activity.activity_id)).all()
+            activity_list = Activity.query.filter_by(activity_id = activityIds).with_entities(Activity.activity_id).all()
+            for j in range(len(activity_list)):
+                result = result + activity_list[j]
+
         return jsonify({"result" : result})
     else:
         return render_template('apologies.html')
