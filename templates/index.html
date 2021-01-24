@@ -375,7 +375,11 @@
             }
 
             // will use the following for photos; it's a key for google photo references
-            // photo_reference = result.results[i].photos[0].photo_reference;
+            if(result.results[i].photos.length>0) { 
+              photo_reference = result.results[i].photos[0].photo_reference;
+              url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=100&maxheight=100&key=AIzaSyB2TMvSqQ9or3Q4YqgGdnRHcX6lgPhYiJU&photoreference="+photo_reference;
+              tempInnerHtml = tempInnerHtml + "<img src=\""+url+"\">";
+            }
 
             tempInnerHtml = tempInnerHtml + "</div>";
           }
