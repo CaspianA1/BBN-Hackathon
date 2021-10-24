@@ -1,3 +1,7 @@
+# EXPLORANTINE
+<a href="https://devpost.com/software/explorantine-nhezvm">Devpost</a>
+<a href="https://www.youtube.com/watch?v=ALz4xrCCu2M&t=1s">Video (YouTube)</a>
+
 # Inspiration
 All of us go to school in Concord, MA, a town known for its local history. Many of these local businesses have taken a hit during the pandemic. In this time of physical isolation and political polarization, mental health issues are on the rise as well. We sought to create a solution to both of these problems.
 
