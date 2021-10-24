@@ -1,5 +1,5 @@
 # EXPLORANTINE
-<a href="https://devpost.com/software/explorantine-nhezvm">Devpost</a>
+<a href="https://devpost.com/software/explorantine-nhezvm">Devpost</a><br>
 <a href="https://www.youtube.com/watch?v=ALz4xrCCu2M&t=1s">Video (YouTube)</a>
 
 # Inspiration
